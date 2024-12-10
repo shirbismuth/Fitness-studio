@@ -17,8 +17,8 @@ public class Gym {
         this.name = name;
     }
 
-    public void setSecretary(Person per, int ) {
-        this.secratery = secratery;
+    public void setSecretary(Person p1, int salary) {
+        this.secratery = new Secretary(p1, salary);
     }
 
     public Secretary getSecretary() {

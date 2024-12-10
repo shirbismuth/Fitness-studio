@@ -10,4 +10,11 @@ public class Person {
         this.gender = gender;
         this.birthday = birthday;
     }
+
+    protected Person(Person per) {
+        this.name = per.name;
+        this.balance = per.balance;
+        this.gender = per.gender;
+        this.birthday = per.birthday;
+    }
 }
