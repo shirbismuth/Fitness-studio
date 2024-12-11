@@ -17,4 +17,7 @@ public class Person {
         this.gender = per.gender;
         this.birthday = per.birthday;
     }
+    protected int  getage(){
+        return this.
+    }
 }
