@@ -1,3 +1,4 @@
+import gym.Exception.DuplicateClientException;
 import gym.Exception.InvalidAgeException;
 
 import java.util.HashSet;
@@ -13,10 +14,11 @@ public class Secretary extends Person {
         this.clients = new HashSet<>();
     }
 
-    public Client registerClient(Person per) throws InvalidAgeException {
+    public Client registerClient(Person per) throws InvalidAgeException, DuplicateClientException {
         if(per.getAge() < 18) throw new InvalidAgeException();
         Client c = new Client(per);
-        clients.add(c);
+        if(clients.contains(c)) throw new DuplicateClientException();
+        else clients.add(c);
         return c;
     }
 }
