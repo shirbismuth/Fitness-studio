@@ -2,7 +2,6 @@ import gym.Exception.InvalidAgeException;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.time.LocalDateTime;
 
 public class Secretary extends Person {
     private int salary;
