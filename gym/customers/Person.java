@@ -1,3 +1,5 @@
+package gym.customers;
+
 import java.time.LocalDate;
 import java.time.Period;
 
@@ -14,14 +16,14 @@ public class Person {
         this.birthday = birthday;
     }
 
-    protected Person(Person per) {
+    public Person(Person per) {
         this.name = per.name;
         this.balance = per.balance;
         this.gender = per.gender;
         this.birthday = per.birthday;
     }
 
-    protected int getAge() {
+    public int getAge() {
         String[] parts = birthday.split("-");
         int year = Integer.parseInt(parts[0]);
         int month = Integer.parseInt(parts[1]);
@@ -32,7 +34,14 @@ public class Person {
         return Period.between(birthDate, currentDate).getYears();
     }
 
-    protected String getName() {
+    public String getName() {
         return name;
     }
+    public int getBalance(){
+        return this.balance;
+    }
+    public Gender getGender(){
+        return this.gender;
+    }
+
 }
