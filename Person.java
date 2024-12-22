@@ -20,6 +20,7 @@ public class Person {
         this.gender = per.gender;
         this.birthday = per.birthday;
     }
+
     protected int getAge() {
         String[] parts = birthday.split("-");
         int year = Integer.parseInt(parts[0]);
@@ -29,5 +30,9 @@ public class Person {
         LocalDate birthDate = LocalDate.of(year, month, day);
         LocalDate currentDate = LocalDate.now();
         return Period.between(birthDate, currentDate).getYears();
+    }
+
+    protected String getName() {
+        return name;
     }
 }
