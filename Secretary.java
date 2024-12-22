@@ -34,7 +34,13 @@ public class Secretary extends Person {
 
     public Instructor hireInstructor(Person per, int hourlyWage, ArrayList<SessionType> qualifiedLessons) {
         Instructor ins = new Instructor(per, hourlyWage, qualifiedLessons);
+        System.out.println("Hired new instructor: " + ins.getName() + " with salary per hour: " + ins.getWage());
         instructors.add(ins);
         return ins;
+    }
+
+    public Session addSession(SessionType sessionType, String time, ForumType fourmType, Instructor ins) {
+
+
     }
 }

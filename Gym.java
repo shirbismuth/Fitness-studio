@@ -19,6 +19,7 @@ public class Gym {
 
     public void setSecretary(Person p1, int salary) {
         this.secratery = new Secretary(p1, salary);
+        System.out.println("A new secretary has started working at the gym: " + secratery.getName());
     }
 
     public Secretary getSecretary() {
