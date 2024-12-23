@@ -4,6 +4,8 @@ import gym.Exception.*;
 import gym.customers.*;
 import gym.management.Sessions.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.ArrayList;
@@ -12,6 +14,7 @@ public class Secretary extends Person {
     private int salary;
     private Set<Client> clients;
     private Set<Instructor> instructors;
+    static final private File outFile = new File("output1.txt"); // Remember to remove the '1' from the name of the file
 
     public Secretary(Person per, int salary) {
         super(per);
@@ -79,10 +82,10 @@ public class Secretary extends Person {
         return s;
     }
 
-    public void registerClientToLesson(Client c, Session s) {
+    public void registerClientToLesson(Client c, Session s) throws ClientNotRegisteredException, DuplicateClientException, IllegalStateException {
         if(!Gym.getInstance().getSecretary().equals(this)) {
-            System.out.println("Error: Former secretaries are not permitted to perform actions"); // Required in assignment
-            throw new IllegalStateException("Former secretaries are not permitted to perform actions");
+            System.out.println("Error: Former secretaries are not permitted to perform actions");
+            return;
         }
         if(c == null || s == null) throw new NullPointerException("Invalid parameters.");
         //Prints:
@@ -104,9 +107,36 @@ public class Secretary extends Person {
             System.out.println("Error: The client is not registered with the gym and cannot enroll in lessons");
             return;
         }
-        if (s.getForumType()=)
+        if (checkForumType(c,s))
 
 
 
+    }
+
+    public boolean checkForumType(Client c, Session s) {
+        String f = s.getForumType().name();
+        String gender = c.getGender().name();
+        switch (s.getForumType()) {
+            case ForumType.All:
+                return true;
+            case ForumType.Male:
+                return new Pilates(time, forumType, instructor);
+            case ForumType.Female:
+                return new MachinePilates(time, forumType, instructor);
+            case ForumType.Seniors:
+                return new Ninja(time, forumType, instructor);
+            default:
+                throw new IllegalArgumentException("Invalid session type");
+        }
+    }
+
+    private void docHistory(String line) {
+        try {
+            if (outFile.createNewFile()) System.out.println("File created: " + outFile.getName());
+            else System.out.println("File already exists.");
+        }
+        catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
     }
 }
