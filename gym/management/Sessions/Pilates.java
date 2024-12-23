@@ -5,13 +5,13 @@ import gym.customers.Client;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Pilates implements Session{
+public class Pilates implements Session {
+    final private int PRICE = 60;
+    final private int CAPACITY = 30;
     private String time;
     private ForumType forumType;
     private Instructor instructor;
     private Set<Client> registered;
-    final private int price = 60;
-    final private int capacity = 30;
 
     public Pilates(String time,ForumType forumType, Instructor instructor){
         this.time=time;
@@ -41,12 +41,12 @@ public class Pilates implements Session{
 
     @Override
     public int getPrice() {
-        return price;
+        return PRICE;
     }
 
     @Override
     public int getCapacity() {
-        return capacity;
+        return CAPACITY;
     }
 
     @Override

@@ -99,7 +99,7 @@ public class Secretary extends Person {
         if (!isQualified) throw new InstructorNotQualifiedException();
 
         Session s = SessionFactory.createSession(sessionType, time, forumType, ins);
-        String action = "Created new session: " + sessionType + " on " + time + "with instructor: " + ins.getName();
+        String action = "Created new session: " + sessionType + " on " + time + " with instructor: " + ins.getName();
         System.out.println(action);
         docHistory(action);
         return s;
@@ -114,15 +114,13 @@ public class Secretary extends Person {
         }
         if (c == null || s == null) throw new NullPointerException("Invalid parameters.");
 
-        //Registered client: Nofar to session: Pilates on 2025-01-23T10:00 for price: 60
-        //Failed registration: gym.management.Sessions.Session is not in the future
         if (c.getBalance() < s.getPrice()) {
             String action = "Failed registration: gym.customers.Client doesn't have enough balance";
             System.out.println(action);
             docHistory(action);
             return;
         }
-        if (s.getCapacity() >= s.getRegistered().size()) {
+        if (s.getCapacity() <= s.getRegistered().size()) {
             String action = "Failed registration: No available spots for session";
             System.out.println(action);
             docHistory(action);
@@ -145,6 +143,9 @@ public class Secretary extends Person {
         s.registerToLesson(c);
         c.withdraw(s.getPrice());
         Gym.getInstance().deposit(s.getPrice());
+        String action = "Registered client: " + c.getName() + " to session: " + s.getSessionType().name() + " on " + s.getTime() + " for price: " + s.getPrice();
+        System.out.println(action);
+        docHistory(action);
     }
 
     public boolean checkForumType(Client c, Session s) {

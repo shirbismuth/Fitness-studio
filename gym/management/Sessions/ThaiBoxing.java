@@ -10,8 +10,8 @@ public class ThaiBoxing implements Session{
     private ForumType forumType;
     private Instructor instructor;
     private Set<Client> registered;
-    final private int price = 100;
-    final private int capacity = 20;
+    final private int PRICE = 100;
+    final private int CAPACITY = 20;
 
     public ThaiBoxing(String time,ForumType forumType, Instructor instructor){
         this.time=time;
@@ -41,12 +41,12 @@ public class ThaiBoxing implements Session{
 
     @Override
     public int getPrice() {
-        return price;
+        return PRICE;
     }
 
     @Override
     public int getCapacity() {
-        return capacity;
+        return CAPACITY;
     }
 
     @Override

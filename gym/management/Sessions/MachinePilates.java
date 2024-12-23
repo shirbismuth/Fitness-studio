@@ -6,12 +6,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class MachinePilates implements Session {
+    final private int PRICE = 80;
+    final private int CAPACITY = 10;
     private String time;
     private ForumType forumType;
     private Instructor instructor;
     private Set<Client> registered;
-    final private int price = 80;
-    final private int capacity = 10;
 
     public MachinePilates(String time,ForumType forumType, Instructor instructor){
         this.time=time;
@@ -41,12 +41,12 @@ public class MachinePilates implements Session {
 
     @Override
     public int getPrice() {
-        return price;
+        return PRICE;
     }
 
     @Override
     public int getCapacity() {
-        return capacity;
+        return CAPACITY;
     }
 
     @Override
