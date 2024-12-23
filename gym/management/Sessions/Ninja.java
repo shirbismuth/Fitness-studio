@@ -21,7 +21,7 @@ public class Ninja implements Session {
     }
     @Override
     public SessionType getSessionType() {
-        return SessionType.Pilates ;
+        return SessionType.Ninja ;
     }
 
     @Override

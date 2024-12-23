@@ -40,10 +40,9 @@ public class Person {
     public int getBalance(){
         return this.balance;
     }
-    public void setBalance(int newbalance){
-        this.balance=newbalance;
+        public void setBalance(int newBalance){
+        this.balance = newBalance;
     }
-
 
     public Gender getGender(){
         return this.gender;

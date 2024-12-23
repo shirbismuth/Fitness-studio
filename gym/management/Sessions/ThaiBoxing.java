@@ -21,7 +21,7 @@ public class ThaiBoxing implements Session{
     }
     @Override
     public SessionType getSessionType() {
-        return SessionType.Pilates ;
+        return SessionType.ThaiBoxing ;
     }
 
     @Override

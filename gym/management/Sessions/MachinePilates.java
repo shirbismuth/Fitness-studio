@@ -21,7 +21,7 @@ public class MachinePilates implements Session {
     }
     @Override
     public SessionType getSessionType() {
-        return SessionType.Pilates ;
+        return SessionType.MachinePilates ;
     }
 
     @Override

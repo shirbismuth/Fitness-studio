@@ -19,7 +19,7 @@ public class Secretary extends Person {
     private int salary;
     private Set<Client> clients;
     private Set<Instructor> instructors;
-    static private File outFile = new File(FILENAME); // Remember to remove the '1' from the name of the file
+    private static File outFile = new File(FILENAME); // Remember to remove the '1' from the name of the file
 
     public Secretary(Person per, int salary) {
         super(per);
@@ -105,82 +105,94 @@ public class Secretary extends Person {
         return s;
     }
 
-    public void registerClientToLesson(Client c, Session s) throws ClientNotRegisteredException, DuplicateClientException, IllegalStateException {
+    public void registerClientToLesson(Client c, Session s) throws ClientNotRegisteredException, DuplicateClientException {
         if (!Gym.getInstance().getSecretary().equals(this)) {
             String e = "Error: Former secretaries are not permitted to perform actions";
             System.out.println(e);
             docHistory(e);
             return;
         }
+
         if (c == null || s == null) throw new NullPointerException("Invalid parameters.");
+
+        if (s.getRegistered().contains(c)) {
+            throw new DuplicateClientException();
+        }
+
+        if (!clients.contains(c)) {
+            throw new ClientNotRegisteredException();
+        }
+
+        boolean isValid = true;
+
+        if (isPassed(s.getTime())) {
+            String e = "Failed registration: gym.management.Sessions.Session is not in the future";
+            System.out.println(e);
+            docHistory(e);
+            isValid = false;
+        }
+
+        String eForumType = isForumTypeMatch(c,s);
+        if (!eForumType.isBlank()) {
+            System.out.println(eForumType);
+            docHistory(eForumType);
+            isValid = false;
+        }
 
         if (c.getBalance() < s.getPrice()) {
             String action = "Failed registration: gym.customers.Client doesn't have enough balance";
             System.out.println(action);
             docHistory(action);
-            return;
+            isValid = false;
         }
+
         if (s.getCapacity() <= s.getRegistered().size()) {
             String action = "Failed registration: No available spots for session";
             System.out.println(action);
             docHistory(action);
-            return;
-        }
-        if (s.getRegistered().contains(c)) {
-           throw new DuplicateClientException();
-        }
-        if (!clients.contains(c)) {
-            throw new ClientNotRegisteredException();
-        }
-        if (!checkForumType(c,s)) return;
-        if (isPassed(s.getTime())) {
-            String e = "Failed registration: gym.management.Sessions.Session is not in the future";
-            System.out.println(e);
-            docHistory(e);
-            return;
+            isValid = false;
         }
 
-        s.registerToLesson(c);
-        c.withdraw(s.getPrice());
-        Gym.getInstance().deposit(s.getPrice());
-        String action = "Registered client: " + c.getName() + " to session: " + s.getSessionType().name() + " on " + s.getTime() + " for price: " + s.getPrice();
-        System.out.println(action);
-        docHistory(action);
+        if(isValid) {
+            s.registerToLesson(c);
+            c.withdraw(s.getPrice());
+            Gym.getInstance().deposit(s.getPrice());
+            String action = "Registered client: " + c.getName() + " to session: " + s.getSessionType().toString() + " on " + s.getTime() + " for price: " + s.getPrice();
+            System.out.println(action);
+            docHistory(action);
+        }
     }
 
-    public boolean checkForumType(Client c, Session s) {
+    private String isForumTypeMatch(Client c, Session s) {
         switch (s.getForumType()) {
-            case ForumType.All:
-                return true;
-            case ForumType.Male:
-            case ForumType.Female:
-                if (s.getForumType().name().equals(c.getGender().name())) {
+            case All:
+                break;
+            case Male:
+                if (!c.getGender().equals(Gender.Male)) {
                     String e = "Failed registration: gym.customers.Client's gender doesn't match the session's gender requirements";
-                    System.out.println(e);
-                    docHistory(e);
-                    return true;
+                    return e;
                 }
-                else return false;
-            case ForumType.Seniors:
+            case Female:
+                if (!c.getGender().equals(Gender.Female)) {
+                    String e = "Failed registration: gym.customers.Client's gender doesn't match the session's gender requirements";
+                    return e;
+                }
+                break;
+            case Seniors:
                 if (c.getAge() < 65) {
                     String e = "Failed registration: gym.customers.Client doesn't meet the age requirements for this session (Seniors)";
-                    System.out.println(e);
-                    docHistory(e);
-                    return false;
+                    return e;
                 }
-                else return true;
+                break;
         }
-        return false;
+        return "";
     }
-    public boolean isPassed (String lessonTime) {
-        String inputDateTime = lessonTime;
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-        LocalDateTime givenDateTime = LocalDateTime.parse(inputDateTime, formatter);
-        LocalDateTime currentDateTime = LocalDateTime.now();
-        if (currentDateTime.isAfter(givenDateTime)) {
-            return true;
-        } else return false;
 
+    private boolean isPassed (String lessonTime) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        LocalDateTime givenDateTime = LocalDateTime.parse(lessonTime, formatter);
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        return currentDateTime.isAfter(givenDateTime);
     }
 
     public static void docHistory(String line) {

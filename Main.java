@@ -101,29 +101,29 @@ public class Main {
             System.out.println(e.getMessage());
         }
 
-//        gymSecretary.notify(s4, "The instructor will be a few minutes late for the session");
-//        gymSecretary.notify("01-01-2025", "Heavy traffic reported around the gym today. Plan ahead to avoid missing your session!");
-//        gymSecretary.notify("Happy New Year to all our valued clients!");
-//
-//        gymSecretary.paySalaries();
-//
-//        gym.setSecretary(p3,8000);
-//        Secretary newGymSecretary = gym.getSecretary();
-//
-//        try{
-//            gymSecretary.registerClientToLesson(c1, s1);
-//        }
-//        catch (NullPointerException e){
-//            System.out.println("Error: Former secretaries are not permitted to perform actions");
-//        }
-//
-//        System.out.println("\n---Actions history---");
-//        newGymSecretary.printActions();
-//
-//        System.out.println("\n" + c1.getName() + " Notifications: " + c1.getNotifications());
-//
-//        System.out.println("\n---Gym information---");
-//
-//        System.out.print(gym);
+        gymSecretary.notify(s4, "The instructor will be a few minutes late for the session");
+        gymSecretary.notify("01-01-2025", "Heavy traffic reported around the gym today. Plan ahead to avoid missing your session!");
+        gymSecretary.notify("Happy New Year to all our valued clients!");
+
+        gymSecretary.paySalaries();
+
+        gym.setSecretary(p3,8000);
+        Secretary newGymSecretary = gym.getSecretary();
+
+        try{
+            gymSecretary.registerClientToLesson(c1, s1);
+        }
+        catch (NullPointerException e){
+            System.out.println("Error: Former secretaries are not permitted to perform actions");
+        }
+
+        System.out.println("\n---Actions history---");
+        newGymSecretary.printActions();
+
+        System.out.println("\n" + c1.getName() + " Notifications: " + c1.getNotifications());
+
+        System.out.println("\n---Gym information---");
+
+        System.out.print(gym);
     }
 }
