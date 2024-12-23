@@ -4,16 +4,16 @@ import gym.customers.*;
 import java.util.ArrayList;
 
 public class Instructor extends Person {
-    private double wage;
+    private int wage;
     private ArrayList<SessionType> qualifiedLessons;
 
-    public Instructor(Person person, double wage, ArrayList<SessionType> arr){
+    public Instructor(Person person, int wage, ArrayList<SessionType> arr){
         super(person);
         this.wage = wage;
         this.qualifiedLessons = new ArrayList<>(arr);
     }
 
-    public double getWage(){
+    public int getWage(){
         return wage;
     }
 

@@ -25,9 +25,9 @@ public class Person {
 
     public int getAge() {
         String[] parts = birthday.split("-");
-        int year = Integer.parseInt(parts[0]);
+        int day = Integer.parseInt(parts[0]);
         int month = Integer.parseInt(parts[1]);
-        int day = Integer.parseInt(parts[2]);
+        int year = Integer.parseInt(parts[2]);
 
         LocalDate birthDate = LocalDate.of(year, month, day);
         LocalDate currentDate = LocalDate.now();
@@ -40,6 +40,11 @@ public class Person {
     public int getBalance(){
         return this.balance;
     }
+    public void setBalance(int newbalance){
+        this.balance=newbalance;
+    }
+
+
     public Gender getGender(){
         return this.gender;
     }

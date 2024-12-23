@@ -5,138 +5,209 @@ import gym.customers.*;
 import gym.management.Sessions.*;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.ArrayList;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Secretary extends Person {
+    static final String FILENAME = "output1.txt";
+
     private int salary;
     private Set<Client> clients;
     private Set<Instructor> instructors;
-    static final private File outFile = new File("output1.txt"); // Remember to remove the '1' from the name of the file
+    static private File outFile = new File(FILENAME); // Remember to remove the '1' from the name of the file
 
     public Secretary(Person per, int salary) {
         super(per);
         this.salary = salary;
         this.clients = new HashSet<>();
+        this.instructors = new HashSet<>();
     }
 
     public Client registerClient(Person per) throws InvalidAgeException, DuplicateClientException {
-        if(!Gym.getInstance().getSecretary().equals(this)) {
-            System.out.println("Error: Former secretaries are not permitted to perform actions"); // Required in assignment
-            throw new IllegalStateException("Former secretaries are not permitted to perform actions");
+        if (!Gym.getInstance().getSecretary().equals(this)) {
+            String e = "Error: Former secretaries are not permitted to perform actions";
+            System.out.println(e);
+            docHistory(e);
+            return null;
         }
-        if(per == null) throw new NullPointerException("Invalid parameters.");
-        if(per.getAge() < 18) throw new InvalidAgeException();
+        if (per == null) throw new NullPointerException("Invalid parameters.");
+        if (per.getAge() < 18) throw new InvalidAgeException();
         Client c = new Client(per);
-        if(clients.contains(c)) throw new DuplicateClientException();
+        if (clients.contains(c)) throw new DuplicateClientException();
         clients.add(c);
-        System.out.println("Registered new client: " + c.getName());
+        String action = "Registered new client: " + c.getName();
+        System.out.println(action);
+        docHistory(action);
         return c;
     }
 
     public void unregisterClient(Client c) throws ClientNotRegisteredException {
-        if(!Gym.getInstance().getSecretary().equals(this)) {
-            System.out.println("Error: Former secretaries are not permitted to perform actions"); // Required in assignment
-            throw new IllegalStateException("Former secretaries are not permitted to perform actions");
+        if (!Gym.getInstance().getSecretary().equals(this)) {
+            String e = "Error: Former secretaries are not permitted to perform actions";
+            System.out.println(e);
+            docHistory(e);
+            return;
         }
-        if(c != null) {
-            if(!clients.contains(c)) throw new ClientNotRegisteredException();
-            System.out.println("Unregistered client: " + c.getName());
+        if (c != null) {
+            if (!clients.contains(c)) throw new ClientNotRegisteredException();
             clients.remove(c);
+            String action = "Unregistered client: " + c.getName();
+            System.out.println(action);
+            docHistory(action);
         }
     }
 
     public Instructor hireInstructor(Person per, int hourlyWage, ArrayList<SessionType> qualifiedLessons) {
-        if(!Gym.getInstance().getSecretary().equals(this)) {
-            System.out.println("Error: Former secretaries are not permitted to perform actions"); // Required in assignment
-            throw new IllegalStateException("Former secretaries are not permitted to perform actions");
+        if (!Gym.getInstance().getSecretary().equals(this)) {
+            String e = "Error: Former secretaries are not permitted to perform actions";
+            System.out.println(e);
+            docHistory(e);
+            return null;
         }
-        if(per == null || qualifiedLessons.isEmpty()) throw new NullPointerException("Invalid parameters.");
+        if (per == null || qualifiedLessons.isEmpty()) throw new NullPointerException("Invalid parameters.");
         Instructor ins = new Instructor(per, hourlyWage, qualifiedLessons);
-        System.out.println("Hired new instructor: " + ins.getName() + " with salary per hour: " + ins.getWage());
         instructors.add(ins);
+        String action = "Hired new instructor: " + ins.getName() + " with salary per hour: " + ins.getWage();
+        System.out.println(action);
+        docHistory(action);
         return ins;
     }
 
     public Session addSession(SessionType sessionType, String time, ForumType forumType, Instructor ins) throws InstructorNotQualifiedException {
-        if(!Gym.getInstance().getSecretary().equals(this)) {
-            System.out.println("Error: Former secretaries are not permitted to perform actions"); // Required in assignment
-            throw new IllegalStateException("Former secretaries are not permitted to perform actions");
+        if (!Gym.getInstance().getSecretary().equals(this)) {
+            String e = "Error: Former secretaries are not permitted to perform actions";
+            System.out.println(e);
+            docHistory(e);
+            return null;
         }
-        if(sessionType == null || forumType == null || ins == null) throw new NullPointerException("Invalid parameters.");
+        if (sessionType == null || forumType == null || ins == null)
+            throw new NullPointerException("Invalid parameters.");
 
         // InstructorNotQualifiedException check
         boolean isQualified = false;
-        for(SessionType type : ins.getQualifiedList()) {
-            if(sessionType.equals(type)) {
+        for (SessionType type : ins.getQualifiedList()) {
+            if (sessionType.equals(type)) {
                 isQualified = true;
                 break;
             }
         }
-        if(!isQualified) throw new InstructorNotQualifiedException();
+        if (!isQualified) throw new InstructorNotQualifiedException();
 
         Session s = SessionFactory.createSession(sessionType, time, forumType, ins);
-        System.out.println("Created new session: " + sessionType + " on " + time + "with instructor: " + ins.getName());
+        String action = "Created new session: " + sessionType + " on " + time + "with instructor: " + ins.getName();
+        System.out.println(action);
+        docHistory(action);
         return s;
     }
 
     public void registerClientToLesson(Client c, Session s) throws ClientNotRegisteredException, DuplicateClientException, IllegalStateException {
-        if(!Gym.getInstance().getSecretary().equals(this)) {
-            System.out.println("Error: Former secretaries are not permitted to perform actions");
+        if (!Gym.getInstance().getSecretary().equals(this)) {
+            String e = "Error: Former secretaries are not permitted to perform actions";
+            System.out.println(e);
+            docHistory(e);
             return;
         }
-        if(c == null || s == null) throw new NullPointerException("Invalid parameters.");
-        //Prints:
+        if (c == null || s == null) throw new NullPointerException("Invalid parameters.");
+
         //Registered client: Nofar to session: Pilates on 2025-01-23T10:00 for price: 60
         //Failed registration: gym.management.Sessions.Session is not in the future
-        if (c.getBalance() < s.getPrice()){
-            System.out.println("Failed registration: gym.customers.Client doesn't have enough balance");
+        if (c.getBalance() < s.getPrice()) {
+            String action = "Failed registration: gym.customers.Client doesn't have enough balance";
+            System.out.println(action);
+            docHistory(action);
             return;
         }
-        if (s.getCapacity()==s.getRegistered().size()){
-            System.out.println("Failed registration: No available spots for session");
+        if (s.getCapacity() >= s.getRegistered().size()) {
+            String action = "Failed registration: No available spots for session";
+            System.out.println(action);
+            docHistory(action);
             return;
         }
-        if (s.getRegistered().contains(c)){
-            System.out.println("Error: The client is already registered for this lesson");
+        if (s.getRegistered().contains(c)) {
+           throw new DuplicateClientException();
+        }
+        if (!clients.contains(c)) {
+            throw new ClientNotRegisteredException();
+        }
+        if (!checkForumType(c,s)) return;
+        if (isPassed(s.getTime())) {
+            String e = "Failed registration: gym.management.Sessions.Session is not in the future";
+            System.out.println(e);
+            docHistory(e);
             return;
         }
-        if (!clients.contains(c)){
-            System.out.println("Error: The client is not registered with the gym and cannot enroll in lessons");
-            return;
-        }
-        if (checkForumType(c,s))
 
-
-
+        s.registerToLesson(c);
+        c.withdraw(s.getPrice());
+        Gym.getInstance().deposit(s.getPrice());
     }
 
     public boolean checkForumType(Client c, Session s) {
-        String f = s.getForumType().name();
-        String gender = c.getGender().name();
         switch (s.getForumType()) {
             case ForumType.All:
                 return true;
             case ForumType.Male:
-                return new Pilates(time, forumType, instructor);
             case ForumType.Female:
-                return new MachinePilates(time, forumType, instructor);
+                if (s.getForumType().name().equals(c.getGender().name())) {
+                    String e = "Failed registration: gym.customers.Client's gender doesn't match the session's gender requirements";
+                    System.out.println(e);
+                    docHistory(e);
+                    return true;
+                }
+                else return false;
             case ForumType.Seniors:
-                return new Ninja(time, forumType, instructor);
-            default:
-                throw new IllegalArgumentException("Invalid session type");
+                if (c.getAge() < 65) {
+                    String e = "Failed registration: gym.customers.Client doesn't meet the age requirements for this session (Seniors)";
+                    System.out.println(e);
+                    docHistory(e);
+                    return false;
+                }
+                else return true;
+        }
+        return false;
+    }
+    public boolean isPassed (String lessonTime) {
+        String inputDateTime = lessonTime;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        LocalDateTime givenDateTime = LocalDateTime.parse(inputDateTime, formatter);
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        if (currentDateTime.isAfter(givenDateTime)) {
+            return true;
+        } else return false;
+
+    }
+
+    public static void docHistory(String line) {
+        boolean created = createFile();
+        try {
+            FileWriter writerFile = new FileWriter(FILENAME, true);
+            if(!created) writerFile.append("\n"); // New line
+            writerFile.append(line);
+            writerFile.close();
+        }
+        catch (IOException e) {
+            System.out.println("An error occurred related to the actions history (Writing).");
+            e.printStackTrace();
         }
     }
 
-    private void docHistory(String line) {
+    private static boolean createFile() {
         try {
-            if (outFile.createNewFile()) System.out.println("File created: " + outFile.getName());
-            else System.out.println("File already exists.");
+            if (outFile.createNewFile()) {
+                System.out.println("File created: " + outFile.getName());
+                return true;
+            }
+            // else: File already exists - the method returns false
         }
         catch (IOException e) {
-            System.out.println("An error occurred.");
+            System.out.println("An error occurred related to the actions history (Creating file).");
             e.printStackTrace();
+        }
+        return false;
     }
 }

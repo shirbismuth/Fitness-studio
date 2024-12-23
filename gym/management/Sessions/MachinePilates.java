@@ -2,6 +2,7 @@ package gym.management.Sessions;
 
 import gym.customers.Client;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class MachinePilates implements Session {
@@ -16,6 +17,7 @@ public class MachinePilates implements Session {
         this.time=time;
         this.forumType=forumType;
         this.instructor=instructor;
+        this.registered = new HashSet<>();
     }
     @Override
     public SessionType getSessionType() {
@@ -45,5 +47,15 @@ public class MachinePilates implements Session {
     @Override
     public int getCapacity() {
         return capacity;
+    }
+
+    @Override
+    public Set<Client> getRegistered() {
+        return new HashSet<>(registered);
+    }
+
+    @Override
+    public void registerToLesson(Client c){
+        registered.add(c);
     }
 }
