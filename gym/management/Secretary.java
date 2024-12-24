@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class Secretary extends Person implements Subject {
+public class Secretary extends Person {
     static final String FILENAME = "output1.txt";
 
     private int salary;
@@ -28,7 +28,6 @@ public class Secretary extends Person implements Subject {
         this.instructors = new HashSet<>();
     }
 
-    @Override
     public Client registerClient(Person per) throws InvalidAgeException, DuplicateClientException {
         if (!Gym.getInstance().getSecretary().equals(this)) {
             String e = "Error: Former secretaries are not permitted to perform actions";
@@ -224,6 +223,4 @@ public class Secretary extends Person implements Subject {
         }
         return false;
     }
-
-
 }
