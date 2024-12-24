@@ -107,7 +107,8 @@ public class Main {
 
 //        gymSecretary.paySalaries();
 
-        gym.setSecretary(p3,8000);        Secretary newGymSecretary = gym.getSecretary();
+        gym.setSecretary(p3,8000);
+        Secretary newGymSecretary = gym.getSecretary();
 
         try{
             gymSecretary.registerClientToLesson(c1, s1);
@@ -125,4 +126,7 @@ public class Main {
 
         System.out.print(gym);
     }
+
+
+
 }

@@ -206,6 +206,7 @@ public class Secretary extends Person {
             FileWriter writerFile = new FileWriter(FILENAME, true);
             if(!created) writerFile.append("\n"); // New line
             writerFile.append(line);
+            System.out.println(line);
             writerFile.close();
         }
         catch (IOException e) {
