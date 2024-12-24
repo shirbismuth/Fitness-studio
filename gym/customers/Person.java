@@ -4,16 +4,20 @@ import java.time.LocalDate;
 import java.time.Period;
 
 public class Person implements Observer {
+    private static int countID = 1111;
+
     private String name;
     private int balance;
     private Gender gender;
     private String birthday;
+    private int id;
 
     public Person(String name, int balance, Gender gender, String birthday) {
         this.name = name;
         this.balance = balance;
         this.gender = gender;
         this.birthday = birthday;
+        this.id = countID++;
     }
 
     public Person(Person per) {
@@ -21,6 +25,7 @@ public class Person implements Observer {
         this.balance = per.balance;
         this.gender = per.gender;
         this.birthday = per.birthday;
+        this.id = per.id;
     }
 
     public int getAge() {
@@ -50,5 +55,10 @@ public class Person implements Observer {
 
     public void update(String message) {
         // Nothing
+    }
+
+    public int getID()
+    {
+        return id;
     }
 }

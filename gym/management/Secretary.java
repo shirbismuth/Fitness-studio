@@ -31,17 +31,20 @@ public class Secretary extends Person {
     public Client registerClient(Person per) throws InvalidAgeException, DuplicateClientException {
         if (!Gym.getInstance().getSecretary().equals(this)) {
             String e = "Error: Former secretaries are not permitted to perform actions";
-            System.out.println(e);
-            actionsHistory.add(e);
+            docHistory(e);
             return null;
         }
         if (per == null) throw new NullPointerException("Invalid parameters.");
         if (per.getAge() < 18) throw new InvalidAgeException();
+        for (Client current : clients)
+        {
+            if(current.getID() == per.getID()) throw new DuplicateClientException();
+        }
         Client c = new Client(per);
-        if (clients.contains(c)) throw new DuplicateClientException();
+//        if (clients.contains(c)) throw new DuplicateClientException();
         clients.add(c);
         String action = "Registered new client: " + c.getName();
-        System.out.println(action);
+
         actionsHistory.add(action);
         return c;
     }
@@ -49,15 +52,13 @@ public class Secretary extends Person {
     public void unregisterClient(Client c) throws ClientNotRegisteredException {
         if (!Gym.getInstance().getSecretary().equals(this)) {
             String e = "Error: Former secretaries are not permitted to perform actions";
-            System.out.println(e);
-            actionsHistory.add(e);
+            docHistory(e);
             return;
         }
         if (c != null) {
             if (!clients.contains(c)) throw new ClientNotRegisteredException();
             clients.remove(c);
             String action = "Unregistered client: " + c.getName();
-            System.out.println(action);
             actionsHistory.add(action);
         }
     }
@@ -65,15 +66,13 @@ public class Secretary extends Person {
     public Instructor hireInstructor(Person per, int hourlyWage, ArrayList<SessionType> qualifiedLessons) {
         if (!Gym.getInstance().getSecretary().equals(this)) {
             String e = "Error: Former secretaries are not permitted to perform actions";
-            System.out.println(e);
-            actionsHistory.add(e);
+            docHistory(e);
             return null;
         }
         if (per == null || qualifiedLessons.isEmpty()) throw new NullPointerException("Invalid parameters.");
         Instructor ins = new Instructor(per, hourlyWage, qualifiedLessons);
         instructors.add(ins);
         String action = "Hired new instructor: " + ins.getName() + " with salary per hour: " + ins.getWage();
-        System.out.println(action);
         actionsHistory.add(action);
         return ins;
     }
@@ -81,8 +80,7 @@ public class Secretary extends Person {
     public Session addSession(SessionType sessionType, String time, ForumType forumType, Instructor ins) throws InstructorNotQualifiedException {
         if (!Gym.getInstance().getSecretary().equals(this)) {
             String e = "Error: Former secretaries are not permitted to perform actions";
-            System.out.println(e);
-            actionsHistory.add(e);
+            docHistory(e);
             return null;
         }
         if (sessionType == null || forumType == null || ins == null)
@@ -99,8 +97,8 @@ public class Secretary extends Person {
         if (!isQualified) throw new InstructorNotQualifiedException();
 
         Session s = SessionFactory.createSession(sessionType, time, forumType, ins);
-        String action = "Created new session: " + sessionType + " on " + time + " with instructor: " + ins.getName();
-        System.out.println(action);
+        String tempTime = timeToFormat(time);
+        String action = "Created new session: " + sessionType + " on " + tempTime + " with instructor: " + ins.getName();
         actionsHistory.add(action);
         return s;
     }
@@ -108,47 +106,46 @@ public class Secretary extends Person {
     public void registerClientToLesson(Client c, Session s) throws ClientNotRegisteredException, DuplicateClientException {
         if (!Gym.getInstance().getSecretary().equals(this)) {
             String e = "Error: Former secretaries are not permitted to perform actions";
-            System.out.println(e);
-            actionsHistory.add(e);
+            docHistory(e);
             return;
         }
 
         if (c == null || s == null) throw new NullPointerException("Invalid parameters.");
 
-        if (s.getRegistered().contains(c)) {
-            throw new DuplicateClientException();
+        if (!clients.contains(c)) {
+            String e = "Error: The client is not registered with the gym and cannot enroll in lessons";
+            docHistory(e);
+            return;
         }
 
-        if (!clients.contains(c)) {
-            throw new ClientNotRegisteredException();
+        if (s.getRegistered().contains(c)) {
+            String e = "Error: The client is already registered for this lesson";
+            docHistory(e);
+            return;
         }
 
         boolean isValid = true;
 
         if (isPassed(s.getTime())) {
-            String e = "Failed registration: gym.management.Sessions.Session is not in the future";
-            System.out.println(e);
+            String e = "Failed registration: Session is not in the future";
             actionsHistory.add(e);
             isValid = false;
         }
 
         String eForumType = isForumTypeMatch(c,s);
         if (!eForumType.isBlank()) {
-            System.out.println(eForumType);
             actionsHistory.add(eForumType);
             isValid = false;
         }
 
         if (c.getBalance() < s.getPrice()) {
-            String action = "Failed registration: gym.customers.Client doesn't have enough balance";
-            System.out.println(action);
+            String action = "Failed registration: Client doesn't have enough balance";
             actionsHistory.add(action);
             isValid = false;
         }
 
         if (s.getCapacity() <= s.getRegistered().size()) {
             String action = "Failed registration: No available spots for session";
-            System.out.println(action);
             actionsHistory.add(action);
             isValid = false;
         }
@@ -157,8 +154,8 @@ public class Secretary extends Person {
             s.registerToLesson(c);
             c.withdraw(s.getPrice());
             Gym.getInstance().deposit(s.getPrice());
-            String action = "Registered client: " + c.getName() + " to session: " + s.getSessionType().toString() + " on " + s.getTime() + " for price: " + s.getPrice();
-            System.out.println(action);
+            String tempTime = timeToFormat(s.getTime());
+            String action = "Registered client: " + c.getName() + " to session: " + s.getSessionType().toString() + " on " + tempTime + " for price: " + s.getPrice();
             actionsHistory.add(action);
         }
     }
@@ -169,18 +166,18 @@ public class Secretary extends Person {
                 break;
             case Male:
                 if (!c.getGender().equals(Gender.Male)) {
-                    String e = "Failed registration: gym.customers.Client's gender doesn't match the session's gender requirements";
+                    String e = "Failed registration: Client's gender doesn't match the session's gender requirements";
                     return e;
                 }
             case Female:
                 if (!c.getGender().equals(Gender.Female)) {
-                    String e = "Failed registration: gym.customers.Client's gender doesn't match the session's gender requirements";
+                    String e = "Failed registration: Client's gender doesn't match the session's gender requirements";
                     return e;
                 }
                 break;
             case Seniors:
                 if (c.getAge() < 65) {
-                    String e = "Failed registration: gym.customers.Client doesn't meet the age requirements for this session (Seniors)";
+                    String e = "Failed registration: Client doesn't meet the age requirements for this session (Seniors)";
                     return e;
                 }
                 break;
@@ -196,6 +193,7 @@ public class Secretary extends Person {
     }
     public static void printActions()
     {
+        docHistory("\n---Actions history---");
         for(String action : actionsHistory)
             docHistory(action);
     }
@@ -228,5 +226,12 @@ public class Secretary extends Person {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public String timeToFormat(String time) {
+        DateTimeFormatter originalFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        DateTimeFormatter resultFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+        LocalDateTime dateTime = LocalDateTime.parse(time, originalFormat);
+        return dateTime.format(resultFormat);
     }
 }

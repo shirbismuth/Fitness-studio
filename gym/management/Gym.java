@@ -32,9 +32,8 @@ public class Gym {
 
     public void setSecretary(Person p1, int salary) {
         secratary = new Secretary(p1, salary);
-        String e = "A new secretary has started working at the gym: " + secratary.getName();
-        System.out.println(e);
-        Secretary.docHistory(e);
+        String action = "A new secretary has started working at the gym: " + secratary.getName();
+        Secretary.actionsHistory.add(action);
     }
 
     public void deposit(int sum){
