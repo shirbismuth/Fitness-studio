@@ -3,7 +3,7 @@ package gym.customers;
 import java.time.LocalDate;
 import java.time.Period;
 
-public class Person {
+public class Person implements Observer {
     private String name;
     private int balance;
     private Gender gender;
@@ -48,4 +48,7 @@ public class Person {
         return this.gender;
     }
 
+    public void update(String message) {
+        // Nothing
+    }
 }

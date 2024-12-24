@@ -3,7 +3,7 @@ package gym.customers;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Client extends Person implements Observer {
+public class Client extends Person {
     private List<String> messages;
 
     public Client(Person per) {
