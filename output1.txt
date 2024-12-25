@@ -1,10 +1,13 @@
-A new secretary has started working at the gym: David
-Error: gym.customers.Client must be at least 18 years old to register
-Error: Registration is required before attempting to unregister
-Error: gym.management.Sessions.Instructor is not qualified to conduct this session type.
+Error: Client must be at least 18 years old to register
 Error: The client is already registered
 Error: Registration is required before attempting to unregister
-A new secretary has started working at the gym: Maayan
+Error: Instructor is not qualified to conduct this session type.
+Error: The client is already registered for this lesson
+Error: The client is not registered with the gym and cannot enroll in lessons
+Error: Former secretaries are not permitted to perform actions
+
+---Actions history---
+A new secretary has started working at the gym: David
 Registered new client: Nofar
 Registered new client: Maayan
 Registered new client: Shachar
@@ -12,34 +15,36 @@ Registered new client: Yuval
 Registered new client: Noam
 Registered new client: Neta
 Registered new client: Rom
-Registered new client: Shachar
 Unregistered client: Maayan
 Registered new client: Maayan
 Hired new instructor: Shachar with salary per hour: 70
 Hired new instructor: Yuval with salary per hour: 90
 Hired new instructor: Noam with salary per hour: 50
-Created new session: Pilates on 23-01-2025 10:00 with instructor: Yuval
-Created new session: MachinePilates on 23-10-2024 08:00 with instructor: Shachar
-Created new session: Pilates on 25-01-2025 09:30 with instructor: Noam
-Created new session: ThaiBoxing on 01-01-2025 14:00 with instructor: Yuval
-Created new session: Ninja on 14-01-2025 20:00 with instructor: Noam
-Created new session: ThaiBoxing on 14-01-2025 20:00 with instructor: Shachar
-Registered client: Nofar to session: Pilates on 23-01-2025 10:00 for price: 60
-Failed registration: gym.management.Sessions.Session is not in the future
-Registered client: Nofar to session: ThaiBoxing on 01-01-2025 14:00 for price: 100
-Registered client: Yuval to session: ThaiBoxing on 01-01-2025 14:00 for price: 100
-Failed registration: gym.customers.Client doesn't meet the age requirements for this session (Seniors)
-Failed registration: gym.management.Sessions.Session is not in the future
-Failed registration: gym.customers.Client's gender doesn't match the session's gender requirements
-Failed registration: gym.customers.Client doesn't have enough balance
-Failed registration: gym.management.Sessions.Session is not in the future
-Failed registration: gym.customers.Client's gender doesn't match the session's gender requirements
-Failed registration: gym.customers.Client doesn't have enough balance
-Registered client: Nofar to session: Ninja on 14-01-2025 20:00 for price: 150
-Registered client: Maayan to session: Ninja on 14-01-2025 20:00 for price: 150
-Registered client: Shachar to session: Ninja on 14-01-2025 20:00 for price: 150
-Registered client: Yuval to session: Ninja on 14-01-2025 20:00 for price: 150
-Registered client: Neta to session: Ninja on 14-01-2025 20:00 for price: 150
+Created new session: Pilates on 2025-01-23T10:00 with instructor: Yuval
+Created new session: MachinePilates on 2024-10-23T08:00 with instructor: Shachar
+Created new session: Pilates on 2025-01-25T09:30 with instructor: Noam
+Created new session: ThaiBoxing on 2025-01-01T14:00 with instructor: Yuval
+Created new session: Ninja on 2025-01-14T20:00 with instructor: Noam
+Created new session: ThaiBoxing on 2025-01-14T20:00 with instructor: Shachar
+Registered client: Nofar to session: Pilates on 2025-01-23T10:00 for price: 60
+Failed registration: Session is not in the future
+Registered client: Nofar to session: ThaiBoxing on 2025-01-01T14:00 for price: 100
+Registered client: Yuval to session: ThaiBoxing on 2025-01-01T14:00 for price: 100
+Failed registration: Client doesn't meet the age requirements for this session (Seniors)
+Failed registration: Session is not in the future
+Failed registration: Client's gender doesn't match the session's gender requirements
+Failed registration: Client doesn't have enough balance
+Failed registration: Session is not in the future
+Failed registration: Client's gender doesn't match the session's gender requirements
+Failed registration: Client doesn't have enough balance
+Registered client: Nofar to session: Ninja on 2025-01-14T20:00 for price: 150
+Registered client: Maayan to session: Ninja on 2025-01-14T20:00 for price: 150
+Registered client: Shachar to session: Ninja on 2025-01-14T20:00 for price: 150
+Registered client: Yuval to session: Ninja on 2025-01-14T20:00 for price: 150
+Registered client: Neta to session: Ninja on 2025-01-14T20:00 for price: 150
 Failed registration: No available spots for session
 Unregistered client: Maayan
-Error: Former secretaries are not permitted to perform actions
+A message was sent to everyone registered for session ThaiBoxing on 2025-01-01T14:00 : The instructor will be a few minutes late for the session
+A message was sent to everyone registered for a session on 2025-01-01 : Heavy traffic reported around the gym today. Plan ahead to avoid missing your session!
+A message was sent to all gym clients: Happy New Year to all our valued clients!
+A new secretary has started working at the gym: Maayan

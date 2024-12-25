@@ -3,7 +3,7 @@ package gym.customers;
 import java.time.LocalDate;
 import java.time.Period;
 
-public class Person implements Observer {
+public class Person {
     private static int countID = 1111;
 
     private String name;
@@ -51,10 +51,6 @@ public class Person implements Observer {
 
     public Gender getGender(){
         return this.gender;
-    }
-
-    public void update(String message) {
-        // Nothing
     }
 
     public int getID()

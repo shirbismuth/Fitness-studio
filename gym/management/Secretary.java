@@ -13,19 +13,21 @@ import java.util.ArrayList;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class Secretary extends Person {
+public class Secretary extends Person implements Sender {
     private static final String FILENAME = "output1.txt";
     public static ArrayList<String> actionsHistory = new ArrayList<>();
     private int salary;
-    private Set<Client> clients;
+    private Set<Observer> observers;
     private Set<Instructor> instructors;
+    private Set<Session> sessions;
     private static File outFile = new File(FILENAME); // Remember to remove the '1' from the name of the file
 
     public Secretary(Person per, int salary) {
         super(per);
         this.salary = salary;
-        this.clients = new HashSet<>();
+        this.observers = new HashSet<>();
         this.instructors = new HashSet<>();
+        this.sessions = new HashSet<>();
     }
 
     public Client registerClient(Person per) throws InvalidAgeException, DuplicateClientException {
@@ -36,15 +38,14 @@ public class Secretary extends Person {
         }
         if (per == null) throw new NullPointerException("Invalid parameters.");
         if (per.getAge() < 18) throw new InvalidAgeException();
-        for (Client current : clients)
-        {
-            if(current.getID() == per.getID()) throw new DuplicateClientException();
-        }
-        Client c = new Client(per);
-//        if (clients.contains(c)) throw new DuplicateClientException();
-        clients.add(c);
-        String action = "Registered new client: " + c.getName();
 
+        for (Observer current : observers)
+            if(((Client)current).getID() == per.getID())
+                throw new DuplicateClientException();
+
+        Client c = new Client(per);
+        registerObserver(c);
+        String action = "Registered new client: " + c.getName();
         actionsHistory.add(action);
         return c;
     }
@@ -56,8 +57,8 @@ public class Secretary extends Person {
             return;
         }
         if (c != null) {
-            if (!clients.contains(c)) throw new ClientNotRegisteredException();
-            clients.remove(c);
+            if (!observers.contains(c)) throw new ClientNotRegisteredException();
+            unregisterObserver(c);
             String action = "Unregistered client: " + c.getName();
             actionsHistory.add(action);
         }
@@ -97,6 +98,7 @@ public class Secretary extends Person {
         if (!isQualified) throw new InstructorNotQualifiedException();
 
         Session s = SessionFactory.createSession(sessionType, time, forumType, ins);
+        sessions.add(s);
         String tempTime = timeToFormat(time);
         String action = "Created new session: " + sessionType + " on " + tempTime + " with instructor: " + ins.getName();
         actionsHistory.add(action);
@@ -112,7 +114,7 @@ public class Secretary extends Person {
 
         if (c == null || s == null) throw new NullPointerException("Invalid parameters.");
 
-        if (!clients.contains(c)) {
+        if (!observers.contains(c)) {
             String e = "Error: The client is not registered with the gym and cannot enroll in lessons";
             docHistory(e);
             return;
@@ -233,5 +235,46 @@ public class Secretary extends Person {
         DateTimeFormatter resultFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
         LocalDateTime dateTime = LocalDateTime.parse(time, originalFormat);
         return dateTime.format(resultFormat);
+    }
+
+    @Override
+    public void registerObserver(Observer o) {
+        observers.add(o);
+    }
+
+    @Override
+    public void unregisterObserver(Observer o) {
+        observers.remove(o);
+    }
+
+    @Override
+    public void notify(String message) {
+        for (Observer current : observers) {
+            current.update(message);
+        }
+        actionsHistory.add("A message was sent to all gym clients: " + message);
+    }
+
+    @Override
+    public void notify(Session s, String message) {
+        Set<Client> toNotify = s.getRegistered();
+        for (Observer current : toNotify) {
+            current.update(message);
+        }
+        actionsHistory.add("A message was sent to everyone registered for session " + s.getSessionType() + " on " + timeToFormat(s.getTime()) + " : " + message);
+    }
+
+    @Override
+    public void notify(String date, String message) {
+        for (Session session : sessions) {
+            String[] strArr = session.getTime().split(" ");
+            if(strArr[0].equals(date)){
+                Set<Client> toNotify = session.getRegistered();
+                for (Observer current : toNotify) current.update(message);
+            }
+        }
+        String[] dateArr = date.split("-");
+        String dateByFormat = dateArr[2] + "-" + dateArr[1] + "-" + dateArr[0];
+        actionsHistory.add("A message was sent to everyone registered for a session on " + dateByFormat + " : " + message);
     }
 }
