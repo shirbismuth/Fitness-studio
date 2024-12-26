@@ -1,5 +1,7 @@
 package gym.customers;
 
+import gym.management.Secretary;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +23,8 @@ public class Client extends Person implements Observer {
     }
 
     public List<String> getNotifications() {
+        Secretary.docHistory("");
+        Secretary.docHistory(getName() + " Notifications: " + messages);
         return messages;
     }
 }

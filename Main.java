@@ -105,7 +105,7 @@ public class Main {
         gymSecretary.notify("01-01-2025", "Heavy traffic reported around the gym today. Plan ahead to avoid missing your session!");
         gymSecretary.notify("Happy New Year to all our valued clients!");
 
-//        gymSecretary.paySalaries();
+        gymSecretary.paySalaries();
 
         gym.setSecretary(p3,8000);
         Secretary newGymSecretary = gym.getSecretary();

@@ -40,21 +40,31 @@ public class Person {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
+
     public int getBalance(){
         return this.balance;
-    }
-        public void setBalance(int newBalance){
-        this.balance = newBalance;
     }
 
     public Gender getGender(){
         return this.gender;
     }
 
+    public String getBirthday(){
+        return this.birthday;
+    }
+
     public int getID()
     {
-        return id;
+        return this.id;
+    }
+
+    public void setBalance(int newBalance){
+        this.balance = newBalance;
+    }
+
+    public void deposit(int sum){
+        this.balance += sum;
     }
 }
