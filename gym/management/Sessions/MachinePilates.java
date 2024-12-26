@@ -6,8 +6,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class MachinePilates implements Session {
-    final private int PRICE = 80;
-    final private int CAPACITY = 10;
+    private static final int PRICE = 80;
+    private static final int CAPACITY = 10;
+
     private String time;
     private ForumType forumType;
     private Instructor instructor;

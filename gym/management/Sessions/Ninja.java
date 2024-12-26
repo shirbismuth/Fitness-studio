@@ -6,8 +6,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Ninja implements Session {
-    final private int PRICE = 150;
-    final private int CAPACITY = 5;
+    private static final int PRICE = 150;
+    private static final int CAPACITY = 5;
+
     private String time;
     private ForumType forumType;
     private Instructor instructor;

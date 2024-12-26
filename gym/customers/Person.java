@@ -3,7 +3,7 @@ package gym.customers;
 import java.time.LocalDate;
 import java.time.Period;
 
-public class Person {
+public class Person implements personInterface {
     private static int countID = 1111;
 
     private String name;
@@ -55,16 +55,15 @@ public class Person {
         return this.birthday;
     }
 
-    public int getID()
-    {
+    public int getID() {
         return this.id;
-    }
-
-    public void setBalance(int newBalance){
-        this.balance = newBalance;
     }
 
     public void deposit(int sum){
         this.balance += sum;
+    }
+
+    public void withdraw(int sum){
+        this.balance -= sum;
     }
 }

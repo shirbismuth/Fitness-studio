@@ -13,18 +13,19 @@ import java.util.ArrayList;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class Secretary extends Person implements Sender {
+public class Secretary implements personInterface, Subject {
     private static final String FILENAME = "output1.txt";
 
     private int salary;
+    private Person person;
     public static ArrayList<String> actionsHistory = new ArrayList<>();
     private static Set<Observer> observers = new HashSet<>();
     private static Set<Instructor> instructors = new HashSet<>();
-    private static ArrayList<Session> sessions;
+    private static ArrayList<Session> sessions= new ArrayList<>();
     private static File outFile = new File(FILENAME); // Remember to remove the '1' from the name of the file
 
     public Secretary(Person per, int salary) {
-        super(per);
+        person = per;
         this.salary = salary;
     }
 
@@ -153,8 +154,9 @@ public class Secretary extends Person implements Sender {
 
         if (isValid) {
             s.registerToLesson(c);
-            c.withdraw(s.getPrice());
-            Gym.getInstance().deposit(s.getPrice());
+            int price = s.getPrice();
+            c.withdraw(price);
+            Gym.getInstance().deposit(price);
             String tempTime = timeToFormat(s.getTime());
             String action = "Registered client: " + c.getName() + " to session: " + s.getSessionType().toString() + " on " + tempTime + " for price: " + s.getPrice();
             actionsHistory.add(action);
@@ -278,13 +280,12 @@ public class Secretary extends Person implements Sender {
     public void paySalaries() {
         this.deposit(salary); // Pay to secretary
         Gym.getInstance().withdraw(salary);
-        for (Instructor instructor : instructors) { // Pay to each instructor
-            for (Session session : instructor.getNotPaidSet()) {
-                int wage = instructor.getWage();
-                instructor.deposit(wage);
-                instructor.removeFromNotPaid(session);
-                Gym.getInstance().withdraw(wage);
-            }
+        for (Session session : Instructor.getNotPaidSet()) {
+            Instructor ins = session.getInstructor();
+            int wage = ins.getWage();
+            Instructor.removeFromNotPaid(session);
+            ins.deposit(wage);
+            Gym.getInstance().withdraw(wage);
         }
         actionsHistory.add("Salaries have been paid to all employees");
     }
@@ -299,5 +300,55 @@ public class Secretary extends Person implements Sender {
             result.add((Client) current);
         }
         return result;
+    }
+
+    public Set<Instructor> getInstructors() {
+        return new HashSet<>(instructors);
+    }
+
+    public ArrayList<Session> getSessions() {
+        return new ArrayList<>(sessions);
+    }
+
+    @Override
+    public String getName() {
+        return person.getName();
+    }
+
+    @Override
+    public int getBalance() {
+        return person.getBalance();
+    }
+
+    @Override
+    public Gender getGender() {
+        return person.getGender();
+    }
+
+    @Override
+    public String getBirthday(){
+        return person.getBirthday();
+    }
+
+    @Override
+    public int getID()
+    {
+        return person.getID();
+    }
+
+    @Override
+    public int getAge()
+    {
+        return person.getAge();
+    }
+
+    @Override
+    public void deposit(int sum){
+        person.deposit(sum);
+    }
+
+    @Override
+    public void withdraw(int sum){
+        person.withdraw(sum);
     }
 }

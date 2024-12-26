@@ -6,8 +6,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Pilates implements Session {
-    final private int PRICE = 60;
-    final private int CAPACITY = 30;
+    private static final int PRICE = 60;
+    private static final int CAPACITY = 30;
+
     private String time;
     private ForumType forumType;
     private Instructor instructor;

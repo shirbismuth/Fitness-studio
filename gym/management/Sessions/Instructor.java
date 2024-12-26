@@ -5,39 +5,77 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Instructor extends Person {
+public class Instructor implements personInterface {
+    private static Set<Session> notPaidSessions = new HashSet<>();
     private int hourlyWage;
     private Set<SessionType> qualifiedLessons;
-    private Set<Session> notPaidSessions;
+    private Person person;
 
     public Instructor(Person person, int wage, ArrayList<SessionType> arr){
-        super(person);
+        this.person=person;
         this.hourlyWage = wage;
         this.qualifiedLessons = new HashSet<>(arr);
-        this.notPaidSessions = new HashSet<>();
+    }
+
+    public static Set<Session> getNotPaidSet(){
+        return new HashSet<>(notPaidSessions);
+    }
+
+    public static void addToNotPaidSet(Session s){
+        notPaidSessions.add(s);
+    }
+
+    public static void removeFromNotPaid(Session s){
+        notPaidSessions.remove(s);
     }
 
     public int getWage(){
         return hourlyWage;
     }
 
-    public void deposit(int sum){
-        setBalance(getBalance() + sum);
-    }
-
     public Set<SessionType> getQualifiedList() {
         return new HashSet<>(qualifiedLessons);
     }
 
-    public void addToNotPaidSet(Session s){
-        notPaidSessions.add(s);
+    @Override
+    public String getName() {
+        return person.getName();
     }
 
-    public Set<Session> getNotPaidSet(){
-        return new HashSet<>(notPaidSessions);
+    @Override
+    public int getBalance() {
+        return person.getBalance();
     }
 
-    public void removeFromNotPaid(Session s){
-        notPaidSessions.remove(s);
+    @Override
+    public Gender getGender() {
+        return person.getGender();
+    }
+
+    @Override
+    public String getBirthday(){
+        return person.getBirthday();
+    }
+
+    @Override
+    public int getID()
+    {
+        return person.getID();
+    }
+
+    @Override
+    public int getAge()
+    {
+        return person.getAge();
+    }
+
+    @Override
+    public void deposit(int sum){
+        person.deposit(sum);
+    }
+
+    @Override
+    public void withdraw(int sum){
+        person.withdraw(sum);
     }
 }

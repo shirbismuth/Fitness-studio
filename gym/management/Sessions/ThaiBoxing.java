@@ -6,12 +6,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class ThaiBoxing implements Session{
+    private static final int PRICE = 100;
+    private static final int CAPACITY = 20;
+
     private String time;
     private ForumType forumType;
     private Instructor instructor;
     private Set<Client> registered;
-    final private int PRICE = 100;
-    final private int CAPACITY = 20;
 
     public ThaiBoxing(String time,ForumType forumType, Instructor instructor){
         this.time=time;

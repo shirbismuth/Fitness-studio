@@ -2,7 +2,7 @@ package gym.management.Sessions;
 
 import gym.customers.Observer;
 
-public interface Sender {
+public interface Subject {
     void registerObserver(Observer observer);
     void unregisterObserver(Observer observer);
     void notify(String message);
