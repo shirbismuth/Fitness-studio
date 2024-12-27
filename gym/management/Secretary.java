@@ -30,7 +30,7 @@ public class Secretary implements personInterface, Subject {
     }
 
     public Client registerClient(Person per) throws InvalidAgeException, DuplicateClientException {
-        if (!Gym.getInstance().getSecretary().equals(this)) {
+        if (!this.equals(Gym.getInstance().getSecretary())) {
             String e = "Error: Former secretaries are not permitted to perform actions";
             docHistory(e);
             return null;
@@ -50,7 +50,7 @@ public class Secretary implements personInterface, Subject {
     }
 
     public void unregisterClient(Client c) throws ClientNotRegisteredException {
-        if (!Gym.getInstance().getSecretary().equals(this)) {
+        if (!this.equals(Gym.getInstance().getSecretary())) {
             String e = "Error: Former secretaries are not permitted to perform actions";
             docHistory(e);
             return;
@@ -64,7 +64,7 @@ public class Secretary implements personInterface, Subject {
     }
 
     public Instructor hireInstructor(Person per, int hourlyWage, ArrayList<SessionType> qualifiedLessons) {
-        if (!Gym.getInstance().getSecretary().equals(this)) {
+        if (!this.equals(Gym.getInstance().getSecretary())) {
             String e = "Error: Former secretaries are not permitted to perform actions";
             docHistory(e);
             return null;
@@ -78,7 +78,7 @@ public class Secretary implements personInterface, Subject {
     }
 
     public Session addSession(SessionType sessionType, String time, ForumType forumType, Instructor ins) throws InstructorNotQualifiedException {
-        if (!Gym.getInstance().getSecretary().equals(this)) {
+        if (!this.equals(Gym.getInstance().getSecretary())) {
             String e = "Error: Former secretaries are not permitted to perform actions";
             docHistory(e);
             return null;
@@ -106,7 +106,7 @@ public class Secretary implements personInterface, Subject {
     }
 
     public void registerClientToLesson(Client c, Session s) throws ClientNotRegisteredException, DuplicateClientException {
-        if (!Gym.getInstance().getSecretary().equals(this)) {
+        if (!this.equals(Gym.getInstance().getSecretary())) {
             String e = "Error: Former secretaries are not permitted to perform actions";
             docHistory(e);
             return;

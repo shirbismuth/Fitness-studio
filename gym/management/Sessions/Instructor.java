@@ -8,13 +8,13 @@ import java.util.Set;
 public class Instructor implements personInterface {
     private static Set<Session> notPaidSessions = new HashSet<>();
     private int hourlyWage;
-    private Set<SessionType> qualifiedLessons;
+    private ArrayList<SessionType> qualifiedLessons;
     private Person person;
 
     public Instructor(Person person, int wage, ArrayList<SessionType> arr){
         this.person=person;
         this.hourlyWage = wage;
-        this.qualifiedLessons = new HashSet<>(arr);
+        this.qualifiedLessons = new ArrayList<>(arr);
     }
 
     public static Set<Session> getNotPaidSet(){
@@ -33,8 +33,8 @@ public class Instructor implements personInterface {
         return hourlyWage;
     }
 
-    public Set<SessionType> getQualifiedList() {
-        return new HashSet<>(qualifiedLessons);
+    public ArrayList<SessionType> getQualifiedList() {
+        return new ArrayList<>(qualifiedLessons);
     }
 
     @Override
