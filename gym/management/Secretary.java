@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Secretary implements personInterface, Subject {
-    private static final String FILENAME = "student_output.txt";
+//    private static final String FILENAME = "student_output.txt";
 
     private int salary;
     private Person person;
