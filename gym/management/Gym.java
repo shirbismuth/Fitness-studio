@@ -122,6 +122,6 @@ public class Gym {
             temp += str + "\n";
         }
 
-        return temp.substring(0, temp.length()-2); // Cuts the last "\n"
+        return temp.substring(0, temp.length()-1); // Cuts the last "\n"
     }
 }
