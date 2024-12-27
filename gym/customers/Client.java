@@ -57,8 +57,8 @@ public class Client implements personInterface, Observer {
     }
 
     public List<String> getNotifications() {
-        Secretary.docHistory("");
-        Secretary.docHistory(person.getName() + " Notifications: " + messages);
+//        Secretary.docHistory("");
+//        Secretary.docHistory(person.getName() + " Notifications: " + messages);
         return messages;
     }
 

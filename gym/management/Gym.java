@@ -58,9 +58,8 @@ public class Gym {
 
     @Override
     public String toString() {
-        Secretary.docHistory("");
-        Secretary.docHistory("---Gym information---");
-
+//        Secretary.docHistory("");
+//        Secretary.docHistory("---Gym information---");
         ArrayList<String> strList = new ArrayList<>();
         // Gym information
         strList.add("Gym Name: " + getName());
@@ -119,7 +118,7 @@ public class Gym {
 
         String temp = "";
         for(String str : strList) {
-            Secretary.docHistory(str);
+//            Secretary.docHistory(str);
             temp += str + "\n";
         }
 

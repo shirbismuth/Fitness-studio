@@ -4,9 +4,9 @@ import gym.Exception.*;
 import gym.customers.*;
 import gym.management.Sessions.*;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+//import java.io.File;
+//import java.io.FileWriter;
+//import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ public class Secretary implements personInterface, Subject {
     private static Set<Observer> observers = new HashSet<>();
     private static Set<Instructor> instructors = new HashSet<>();
     private static ArrayList<Session> sessions= new ArrayList<>();
-    private static File outFile = new File(FILENAME); // Remember to remove the '1' from the name of the file
+//    private static File outFile = new File(FILENAME); // Remember to remove the '1' from the name of the file
 
     public Secretary(Person per, int salary) {
         person = per;
@@ -196,38 +196,44 @@ public class Secretary implements personInterface, Subject {
     }
 
     public static void printActions() {
-        docHistory("\n---Actions history---");
-        for (String action : actionsHistory)
-            docHistory(action);
+//        docHistory("\n---Actions history---");
+        for (String action : actionsHistory) {
+//            docHistory(action);
+            System.out.println(action);
+        }
     }
 
     public static void docHistory(String line) {
-        boolean created = createFile();
-        try {
-            FileWriter writerFile = new FileWriter(FILENAME, true);
-            if (!created) writerFile.append("\n"); // New line
-            writerFile.append(line);
-//            System.out.println(line);
-            writerFile.close();
-        } catch (IOException e) {
-            System.out.println("An error occurred related to the actions history (Writing).");
-            e.printStackTrace();
-        }
+        System.out.println(line);
     }
 
-    private static boolean createFile() {
-        try {
-            if (outFile.createNewFile()) {
-                System.out.println("File created: " + outFile.getName());
-                return true;
-            }
-            // else: File already exists - the method returns false
-        } catch (IOException e) {
-            System.out.println("An error occurred related to the actions history (Creating file).");
-            e.printStackTrace();
-        }
-        return false;
-    }
+//    public static void docHistory(String line) {
+//        boolean created = createFile();
+//        try {
+//            FileWriter writerFile = new FileWriter(FILENAME, true);
+//            if (!created) writerFile.append("\n"); // New line
+//            writerFile.append(line);
+////            System.out.println(line);
+//            writerFile.close();
+//        } catch (IOException e) {
+//            System.out.println("An error occurred related to the actions history (Writing).");
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    private static boolean createFile() {
+//        try {
+//            if (outFile.createNewFile()) {
+//                System.out.println("File created: " + outFile.getName());
+//                return true;
+//            }
+//            // else: File already exists - the method returns false
+//        } catch (IOException e) {
+//            System.out.println("An error occurred related to the actions history (Creating file).");
+//            e.printStackTrace();
+//        }
+//        return false;
+//    }
 
     public String timeToFormat(String time) {
         DateTimeFormatter originalFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
