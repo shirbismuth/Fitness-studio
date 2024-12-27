@@ -14,15 +14,12 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Secretary implements personInterface, Subject {
-//    private static final String FILENAME = "student_output.txt";
-
     private int salary;
     private Person person;
     public static ArrayList<String> actionsHistory = new ArrayList<>();
     private static Set<Observer> observers = new HashSet<>();
     private static Set<Instructor> instructors = new HashSet<>();
     private static ArrayList<Session> sessions= new ArrayList<>();
-//    private static File outFile = new File(FILENAME); // Remember to remove the '1' from the name of the file
 
     public Secretary(Person per, int salary) {
         person = per;
@@ -32,7 +29,7 @@ public class Secretary implements personInterface, Subject {
     public Client registerClient(Person per) throws InvalidAgeException, DuplicateClientException {
         if (!this.equals(Gym.getInstance().getSecretary())) {
             String e = "Error: Former secretaries are not permitted to perform actions";
-            docHistory(e);
+            System.out.println(e);
             return null;
         }
         if (per == null) throw new NullPointerException("Invalid parameters.");
@@ -52,7 +49,7 @@ public class Secretary implements personInterface, Subject {
     public void unregisterClient(Client c) throws ClientNotRegisteredException {
         if (!this.equals(Gym.getInstance().getSecretary())) {
             String e = "Error: Former secretaries are not permitted to perform actions";
-            docHistory(e);
+            System.out.println(e);
             return;
         }
         if (c != null) {
@@ -66,7 +63,7 @@ public class Secretary implements personInterface, Subject {
     public Instructor hireInstructor(Person per, int hourlyWage, ArrayList<SessionType> qualifiedLessons) {
         if (!this.equals(Gym.getInstance().getSecretary())) {
             String e = "Error: Former secretaries are not permitted to perform actions";
-            docHistory(e);
+            System.out.println(e);
             return null;
         }
         if (per == null || qualifiedLessons.isEmpty()) throw new NullPointerException("Invalid parameters.");
@@ -80,7 +77,7 @@ public class Secretary implements personInterface, Subject {
     public Session addSession(SessionType sessionType, String time, ForumType forumType, Instructor ins) throws InstructorNotQualifiedException {
         if (!this.equals(Gym.getInstance().getSecretary())) {
             String e = "Error: Former secretaries are not permitted to perform actions";
-            docHistory(e);
+            System.out.println(e);
             return null;
         }
         if (sessionType == null || forumType == null || ins == null)
@@ -98,7 +95,7 @@ public class Secretary implements personInterface, Subject {
 
         Session s = SessionFactory.createSession(sessionType, time, forumType, ins);
         sessions.add(s);
-        ins.addToNotPaidSet(s);
+        Instructor.addToNotPaidSet(s);
         String tempTime = timeToFormat(time);
         String action = "Created new session: " + sessionType + " on " + tempTime + " with instructor: " + ins.getName();
         actionsHistory.add(action);
@@ -108,7 +105,7 @@ public class Secretary implements personInterface, Subject {
     public void registerClientToLesson(Client c, Session s) throws ClientNotRegisteredException, DuplicateClientException {
         if (!this.equals(Gym.getInstance().getSecretary())) {
             String e = "Error: Former secretaries are not permitted to perform actions";
-            docHistory(e);
+            System.out.println(e);
             return;
         }
 
@@ -116,13 +113,13 @@ public class Secretary implements personInterface, Subject {
 
         if (!observers.contains(c)) {
             String e = "Error: The client is not registered with the gym and cannot enroll in lessons";
-            docHistory(e);
+            System.out.println(e);
             return;
         }
 
         if (s.getRegistered().contains(c)) {
             String e = "Error: The client is already registered for this lesson";
-            docHistory(e);
+            System.out.println(e);
             return;
         }
 
@@ -196,44 +193,10 @@ public class Secretary implements personInterface, Subject {
     }
 
     public static void printActions() {
-//        docHistory("\n---Actions history---");
         for (String action : actionsHistory) {
-//            docHistory(action);
             System.out.println(action);
         }
     }
-
-    public static void docHistory(String line) {
-        System.out.println(line);
-    }
-
-//    public static void docHistory(String line) {
-//        boolean created = createFile();
-//        try {
-//            FileWriter writerFile = new FileWriter(FILENAME, true);
-//            if (!created) writerFile.append("\n"); // New line
-//            writerFile.append(line);
-////            System.out.println(line);
-//            writerFile.close();
-//        } catch (IOException e) {
-//            System.out.println("An error occurred related to the actions history (Writing).");
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    private static boolean createFile() {
-//        try {
-//            if (outFile.createNewFile()) {
-//                System.out.println("File created: " + outFile.getName());
-//                return true;
-//            }
-//            // else: File already exists - the method returns false
-//        } catch (IOException e) {
-//            System.out.println("An error occurred related to the actions history (Creating file).");
-//            e.printStackTrace();
-//        }
-//        return false;
-//    }
 
     public String timeToFormat(String time) {
         DateTimeFormatter originalFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
