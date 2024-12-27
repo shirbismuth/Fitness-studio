@@ -121,7 +121,6 @@ public class Gym {
 //            Secretary.docHistory(str);
             temp += str + "\n";
         }
-
         return temp.substring(0, temp.length()-1); // Cuts the last "\n"
     }
 }
