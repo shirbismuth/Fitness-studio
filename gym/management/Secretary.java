@@ -207,7 +207,7 @@ public class Secretary implements personInterface, Subject {
             FileWriter writerFile = new FileWriter(FILENAME, true);
             if (!created) writerFile.append("\n"); // New line
             writerFile.append(line);
-            System.out.println(line);
+//            System.out.println(line);
             writerFile.close();
         } catch (IOException e) {
             System.out.println("An error occurred related to the actions history (Writing).");
