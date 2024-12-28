@@ -114,7 +114,7 @@ public class Ninja implements Session {
     }
 
     @Override
-    public String toString() {
+    public String display() {
         return "Session Type: Ninja" + " | Date: " + time + " | Forum: " + forumType +
                 " | Instructor: " + instructor.getName() + " | Participants: " + registered.size() + "/" + CAPACITY;
     }

@@ -147,7 +147,7 @@ public class Gym {
         ArrayList<Session> sessions = new ArrayList<>(secretary.getSessions());
 
         for(Session s : sessions) {
-            strList.add(s.toString());
+            strList.add(s.display());
         }
 
         String temp = "";

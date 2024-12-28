@@ -114,7 +114,7 @@ public class ThaiBoxing implements Session {
     }
 
     @Override
-    public String toString() {
+    public String display() {
         return "Session Type: ThaiBoxing" + " | Date: " + time + " | Forum: " + forumType +
                 " | Instructor: " + instructor.getName() + " | Participants: " + registered.size() + "/" + CAPACITY;
     }

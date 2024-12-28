@@ -114,7 +114,7 @@ public class MachinePilates implements Session {
     }
 
     @Override
-    public String toString() {
+    public String display() {
         return "Session Type: MachinePilates" + " | Date: " + time + " | Forum: " + forumType +
                 " | Instructor: " + instructor.getName() + " | Participants: " + registered.size() + "/" + CAPACITY;
     }

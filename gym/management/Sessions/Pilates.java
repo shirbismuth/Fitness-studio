@@ -61,7 +61,7 @@ public class Pilates implements Session {
     }
 
     @Override
-    public String toString() {
+    public String display() {
         return "Session Type: Pilates" + " | Date: " + time + " | Forum: " + forumType +
                 " | Instructor: " + instructor.getName() + " | Participants: " + registered.size() + "/" + CAPACITY;
     }
