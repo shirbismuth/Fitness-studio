@@ -331,6 +331,10 @@ public class Secretary implements personInterface, Subject {
         actionsHistory.add("Salaries have been paid to all employees");
     }
 
+    public String toString(){
+        return person.toString() +  " | Role: Secretary | Salary per Month: " + salary;
+    }
+
     /**
      * Returns the salary of the secretary.
      *

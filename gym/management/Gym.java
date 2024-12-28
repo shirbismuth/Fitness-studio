@@ -114,9 +114,7 @@ public class Gym {
         ArrayList<String> strList = new ArrayList<>();
         // Gym information
         strList.add("Gym Name: " + getName());
-        strList.add("Gym Secretary: ID: " + secretary.getID() + " | Name: " + secretary.getName() + " | Gender: " +
-                secretary.getGender() + " | Birthday: " + secretary.getBirthday() + " | Age: " + secretary.getAge() +
-                " | Balance: " + secretary.getBalance() + " | Role: Secretary | Salary per Month: " + secretary.getSalary());
+        strList.add("Gym Secretary: " + secretary);
         strList.add("Gym Balance: " + Gym.getInstance().getBalance());
 
         // Empty line
@@ -128,8 +126,7 @@ public class Gym {
         clients.sort(new SortClientsByID());
 
         for(Client c : clients) {
-            strList.add("ID: " + c.getID() + " | Name: " + c.getName() + " | Gender: " + c.getGender() +
-                    " | Birthday: " + c.getBirthday() + " | Age: " + c.getAge() + " | Balance: " + c.getBalance());
+            strList.add(c.toString());
         }
 
         // Empty line
@@ -142,19 +139,10 @@ public class Gym {
 
         // Instructors
         for(Instructor ins : instructors) {
-            String certifiedClasses = "";
-            for(SessionType cls : ins.getQualifiedList()) {
-                certifiedClasses += cls + ", ";
-            }
-            certifiedClasses = certifiedClasses.substring(0, certifiedClasses.length()-2); // Cuts the last comma and space
-            strList.add("ID: " + ins.getID() + " | Name: " + ins.getName() + " | Gender: " + ins.getGender() +
-                    " | Birthday: " + ins.getBirthday() + " | Age: " + ins.getAge() + " | Balance: " + ins.getBalance() +
-                    " | Role: Instructor | Salary per Hour: " + ins.getWage() + " | Certified Classes: " + certifiedClasses);
+            strList.add(ins.toString());
         }
         // Secretary
-        strList.add("ID: " + secretary.getID() + " | Name: " + secretary.getName() + " | Gender: " + secretary.getGender() +
-                " | Birthday: " + secretary.getBirthday() + " | Age: " + secretary.getAge() + " | Balance: " + secretary.getBalance() +
-                " | Role: Secretary | Salary per Month: " + secretary.getSalary());
+        strList.add(secretary.toString());
 
         // Empty line
         strList.add("");

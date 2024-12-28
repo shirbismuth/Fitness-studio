@@ -102,4 +102,10 @@ public class Person implements personInterface {
     public void withdraw(int sum){
         this.balance -= sum;
     }
+
+    @Override
+    public String toString() {
+        return "ID: " + id + " | Name: " + name + " | Gender: " + gender + " | Birthday: " + birthday +
+                " | Age: " + getAge() + " | Balance: " + balance;
+    }
 }

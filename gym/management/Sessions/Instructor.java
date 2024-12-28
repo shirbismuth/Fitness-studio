@@ -158,4 +158,15 @@ public class Instructor implements personInterface {
     public void withdraw(int sum){
         person.withdraw(sum);
     }
+
+    @Override
+    public String toString() {
+        String certifiedClasses = "";
+        for(SessionType cls : qualifiedLessons) {
+            certifiedClasses += cls + ", ";
+        }
+        certifiedClasses = certifiedClasses.substring(0, certifiedClasses.length()-2); // Cuts the last comma and space
+        return person.toString() + " | Role: Instructor | Salary per Hour: " + hourlyWage +
+                " | Certified Classes: " + certifiedClasses;
+    }
 }

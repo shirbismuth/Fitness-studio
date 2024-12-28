@@ -118,4 +118,9 @@ public class Client implements personInterface, Observer {
     public void update(String message) {
         messages.add(message);
     }
+
+    @Override
+    public String toString() {
+       return person.toString();
+    }
 }
