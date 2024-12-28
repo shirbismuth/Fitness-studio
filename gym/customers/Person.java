@@ -1,7 +1,6 @@
 package gym.customers;
 
-import java.time.LocalDate;
-import java.time.Period;
+import gym.helpers.*;
 
 /**
  * The Person class implements the personInterface and represents a person in the gym system.
@@ -38,14 +37,7 @@ public class Person implements personInterface {
      * @return the age of the person
      */
     public int getAge() {
-        String[] parts = birthday.split("-");
-        int day = Integer.parseInt(parts[0]);
-        int month = Integer.parseInt(parts[1]);
-        int year = Integer.parseInt(parts[2]);
-
-        LocalDate birthDate = LocalDate.of(year, month, day);
-        LocalDate currentDate = LocalDate.now();
-        return Period.between(birthDate, currentDate).getYears();
+        return Dates.ageCalculator(birthday);
     }
 
     /**

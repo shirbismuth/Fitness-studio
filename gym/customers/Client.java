@@ -77,8 +77,7 @@ public class Client implements personInterface, Observer {
      * @return the age of the client
      */
     @Override
-    public int getAge() {
-        return person.getAge();
+    public int getAge() {return person.getAge();
     }
 
     /**

@@ -6,9 +6,8 @@ import gym.Exception.InstructorNotQualifiedException;
 import gym.Exception.InvalidAgeException;
 import gym.customers.*;
 import gym.management.Sessions.*;
+import gym.helpers.*;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -138,7 +137,7 @@ public class Secretary implements personInterface, Subject {
         Session s = SessionFactory.createSession(sessionType, time, forumType, ins);
         sessions.add(s);
         Instructor.addToNotPaidSet(s);
-        String tempTime = timeToFormat(time);
+        String tempTime = Dates.timeToFormat(time);
         String action = "Created new session: " + sessionType + " on " + tempTime + " with instructor: " + ins.getName();
         actionsHistory.add(action);
         return s;
@@ -175,7 +174,7 @@ public class Secretary implements personInterface, Subject {
 
         boolean isValid = true;
 
-        if (isPassed(s.getTime())) {
+        if (Dates.isPassed(s.getTime())) {
             String e = "Failed registration: Session is not in the future";
             actionsHistory.add(e);
             isValid = false;
@@ -204,7 +203,7 @@ public class Secretary implements personInterface, Subject {
             int price = s.getPrice();
             c.withdraw(price);
             Gym.getInstance().deposit(price);
-            String tempTime = timeToFormat(s.getTime());
+            String tempTime = Dates.timeToFormat(s.getTime());
             String action = "Registered client: " + c.getName() + " to session: " + s.getSessionType().toString() + " on " + tempTime + " for price: " + s.getPrice();
             actionsHistory.add(action);
         }
@@ -240,38 +239,12 @@ public class Secretary implements personInterface, Subject {
     }
 
     /**
-     * Checks if the session time has passed.
-     *
-     * @param lessonTime the time of the session
-     * @return true if the session time has passed, otherwise false
-     */
-    private boolean isPassed(String lessonTime) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-        LocalDateTime givenDateTime = LocalDateTime.parse(lessonTime, formatter);
-        LocalDateTime currentDateTime = LocalDateTime.now();
-        return currentDateTime.isAfter(givenDateTime);
-    }
-
-    /**
      * Prints the actions history.
      */
     public static void printActions() {
         for (String action : actionsHistory) {
             System.out.println(action);
         }
-    }
-
-    /**
-     * Converts the time to a specific format.
-     *
-     * @param time the time to be converted
-     * @return the formatted time
-     */
-    public String timeToFormat(String time) {
-        DateTimeFormatter originalFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-        DateTimeFormatter resultFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
-        LocalDateTime dateTime = LocalDateTime.parse(time, originalFormat);
-        return dateTime.format(resultFormat);
     }
 
     /**
@@ -319,7 +292,7 @@ public class Secretary implements personInterface, Subject {
         for (Observer current : toNotify) {
             current.update(message);
         }
-        actionsHistory.add("A message was sent to everyone registered for session " + s.getSessionType() + " on " + timeToFormat(s.getTime()) + " : " + message);
+        actionsHistory.add("A message was sent to everyone registered for session " + s.getSessionType() + " on " + Dates.timeToFormat(s.getTime()) + " : " + message);
     }
 
     /**
