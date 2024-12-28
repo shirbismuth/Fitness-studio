@@ -1,11 +1,10 @@
-package gym.management;
+package gym.management.Sessions;
 
 import gym.Exception.ClientNotRegisteredException;
 import gym.Exception.DuplicateClientException;
 import gym.Exception.InstructorNotQualifiedException;
 import gym.Exception.InvalidAgeException;
 import gym.customers.*;
-import gym.management.Sessions.*;
 import gym.helpers.*;
 
 import java.util.ArrayList;
@@ -23,6 +22,7 @@ public class Secretary implements personInterface, Subject {
     private static Set<Observer> observers = new HashSet<>();
     private static Set<Instructor> instructors = new HashSet<>();
     private static ArrayList<Session> sessions = new ArrayList<>();
+    private static Set<Session> notPaidSessions = new HashSet<>();
 
     /**
      * Constructs a new Secretary with the specified person and salary.
@@ -136,7 +136,7 @@ public class Secretary implements personInterface, Subject {
 
         Session s = SessionFactory.createSession(sessionType, time, forumType, ins);
         sessions.add(s);
-        Instructor.addToNotPaidSet(s);
+        notPaidSessions.add(s);
         String tempTime = Dates.timeToFormat(time);
         String action = "Created new session: " + sessionType + " on " + tempTime + " with instructor: " + ins.getName();
         actionsHistory.add(action);
@@ -321,10 +321,11 @@ public class Secretary implements personInterface, Subject {
     public void paySalaries() {
         this.deposit(salary); // Pay to secretary
         Gym.getInstance().withdraw(salary);
-        for (Session session : Instructor.getNotPaidSet()) {
+        Set<Session> notPaidCopy = new HashSet<>(notPaidSessions);
+        for (Session session : notPaidCopy) {
             Instructor ins = session.getInstructor();
             int wage = ins.getWage();
-            Instructor.removeFromNotPaid(session);
+            notPaidSessions.remove(session);
             ins.deposit(wage);
             Gym.getInstance().withdraw(wage);
         }

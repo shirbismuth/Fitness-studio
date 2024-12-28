@@ -1,6 +1,7 @@
 import gym.Exception.*;
 import gym.customers.*;
-import gym.management.*;
+import gym.management.Sessions.Gym;
+import gym.management.Sessions.Secretary;
 import gym.management.Sessions.*;
 
 import java.util.ArrayList;

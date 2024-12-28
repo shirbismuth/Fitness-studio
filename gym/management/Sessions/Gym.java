@@ -1,9 +1,9 @@
-package gym.management;
+package gym.management.Sessions;
 
 import gym.customers.Client;
 import gym.customers.Person;
 import gym.management.Sorts.*;
-import gym.management.Sessions.*;
+
 import java.util.ArrayList;
 
 /**
@@ -87,7 +87,7 @@ public class Gym {
      *
      * @param sum the sum to be deposited
      */
-    public void deposit(int sum){
+    void deposit(int sum){
         this.balance += sum;
     }
 
@@ -96,7 +96,7 @@ public class Gym {
      *
      * @param sum the sum to be withdrawn
      */
-    public void withdraw(int sum){
+    void withdraw(int sum){
         this.balance -= sum;
     }
 

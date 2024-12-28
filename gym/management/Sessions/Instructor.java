@@ -14,7 +14,6 @@ import java.util.Set;
  * personal details, hourly wage, and qualified session types.
  */
 public class Instructor implements personInterface {
-    private static Set<Session> notPaidSessions = new HashSet<>();
     private int hourlyWage;
     private ArrayList<SessionType> qualifiedLessons;
     private Person person;
@@ -30,33 +29,6 @@ public class Instructor implements personInterface {
         this.person = person;
         this.hourlyWage = wage;
         this.qualifiedLessons = new ArrayList<>(arr);
-    }
-
-    /**
-     * Returns a set of sessions that have not been paid for.
-     *
-     * @return a set of sessions that have not been paid for
-     */
-    public static Set<Session> getNotPaidSet(){
-        return new HashSet<>(notPaidSessions);
-    }
-
-    /**
-     * Adds a session to the set of sessions that have not been paid for.
-     *
-     * @param s the session to be added
-     */
-    public static void addToNotPaidSet(Session s){
-        notPaidSessions.add(s);
-    }
-
-    /**
-     * Removes a session from the set of sessions that have not been paid for.
-     *
-     * @param s the session to be removed
-     */
-    public static void removeFromNotPaid(Session s){
-        notPaidSessions.remove(s);
     }
 
     /**
