@@ -2,12 +2,8 @@ package gym.management;
 
 import gym.customers.Client;
 import gym.customers.Person;
-import gym.management.Sorts.SortClientsByID;
-import gym.management.Sessions.Instructor;
-import gym.management.Sessions.Session;
-import gym.management.Sessions.SessionType;
-import gym.management.Sorts.SortInstructorsByID;
-
+import gym.management.Sorts.*;
+import gym.management.Sessions.*;
 import java.util.ArrayList;
 
 /**

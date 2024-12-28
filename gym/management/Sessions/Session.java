@@ -65,7 +65,4 @@ public interface Session {
      * @param c the client to be registered
      */
     void registerToLesson(Client c);
-
-    @Override
-    String toString();
 }
