@@ -112,10 +112,4 @@ public class MachinePilates implements Session {
     public void registerToLesson(Client c) {
         registered.add(c);
     }
-
-    @Override
-    public String display() {
-        return "Session Type: MachinePilates" + " | Date: " + time + " | Forum: " + forumType +
-                " | Instructor: " + instructor.getName() + " | Participants: " + registered.size() + "/" + CAPACITY;
-    }
 }
