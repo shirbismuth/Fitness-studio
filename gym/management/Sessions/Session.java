@@ -66,5 +66,6 @@ public interface Session {
      */
     void registerToLesson(Client c);
 
+    @Override
     String toString();
 }
