@@ -112,4 +112,10 @@ public class ThaiBoxing implements Session {
     public void registerToLesson(Client c) {
         registered.add(c);
     }
+
+    @Override
+    public String toString() {
+        return "Session Type: ThaiBoxing" + " | Date: " + time + " | Forum: " + forumType +
+                " | Instructor: " + instructor.getName() + " | Participants: " + registered.size() + "/" + CAPACITY;
+    }
 }

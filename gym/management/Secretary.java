@@ -204,7 +204,7 @@ public class Secretary implements personInterface, Subject {
             c.withdraw(price);
             Gym.getInstance().deposit(price);
             String tempTime = Dates.timeToFormat(s.getTime());
-            String action = "Registered client: " + c.getName() + " to session: " + s.getSessionType().toString() + " on " + tempTime + " for price: " + s.getPrice();
+            String action = "Registered client: " + c.getName() + " to session: " + s.getSessionType() + " on " + tempTime + " for price: " + s.getPrice();
             actionsHistory.add(action);
         }
     }
@@ -368,7 +368,6 @@ public class Secretary implements personInterface, Subject {
 
     /**
      * Returns the list of sessions.
-     *
      * @return the list of sessions
      */
     public ArrayList<Session> getSessions() {

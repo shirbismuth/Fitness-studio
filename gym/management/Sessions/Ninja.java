@@ -112,4 +112,10 @@ public class Ninja implements Session {
     public void registerToLesson(Client c) {
         registered.add(c);
     }
+
+    @Override
+    public String toString() {
+        return "Session Type: Ninja" + " | Date: " + time + " | Forum: " + forumType +
+                " | Instructor: " + instructor.getName() + " | Participants: " + registered.size() + "/" + CAPACITY;
+    }
 }
