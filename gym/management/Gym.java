@@ -2,23 +2,35 @@ package gym.management;
 
 import gym.customers.Client;
 import gym.customers.Person;
-import gym.customers.SortClientsByID;
-import gym.customers.SortInstructorsByID;
+import gym.management.Sorts.SortClientsByID;
 import gym.management.Sessions.Instructor;
 import gym.management.Sessions.Session;
 import gym.management.Sessions.SessionType;
+import gym.management.Sorts.SortInstructorsByID;
 
 import java.util.ArrayList;
 
+/**
+ * The Gym class represents a gym in the gym management system.
+ * It is implemented as a singleton to ensure only one instance exists.
+ */
 public class Gym {
     private static Gym instance;
     private String name;
     private int balance;
     private Secretary secretary;
 
+    /**
+     * Private constructor to prevent instantiation.
+     */
     private Gym() {
     }
 
+    /**
+     * Returns the singleton instance of the Gym.
+     *
+     * @return the singleton instance of the Gym
+     */
     public static Gym getInstance() {
         if (instance == null) {
             instance = new Gym();
@@ -26,40 +38,79 @@ public class Gym {
         return instance;
     }
 
+    /**
+     * Returns the name of the gym.
+     *
+     * @return the name of the gym
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Returns the balance of the gym.
+     *
+     * @return the balance of the gym
+     */
     public int getBalance() {
         return balance;
     }
 
+    /**
+     * Returns the secretary of the gym.
+     *
+     * @return the secretary of the gym
+     */
     public Secretary getSecretary() {
         return secretary;
     }
 
+    /**
+     * Sets the name of the gym.
+     *
+     * @param newName the new name of the gym
+     */
     public void setName(String newName) {
         name = newName;
     }
 
+    /**
+     * Sets the secretary of the gym with the specified person and salary.
+     *
+     * @param p1 the person to be set as the secretary
+     * @param salary the salary of the secretary
+     */
     public void setSecretary(Person p1, int salary) {
         secretary = new Secretary(p1, salary);
         String action = "A new secretary has started working at the gym: " + secretary.getName();
         Secretary.actionsHistory.add(action);
     }
 
+    /**
+     * Deposits a specified sum into the gym's balance.
+     *
+     * @param sum the sum to be deposited
+     */
     public void deposit(int sum){
         this.balance += sum;
     }
 
+    /**
+     * Withdraws a specified sum from the gym's balance.
+     *
+     * @param sum the sum to be withdrawn
+     */
     public void withdraw(int sum){
         this.balance -= sum;
     }
 
+    /**
+     * Returns a string representation of the gym, including information about the gym, clients, employees, and sessions.
+     *
+     * @return a string representation of the gym
+     */
     @Override
     public String toString() {
-//        Secretary.docHistory("");
-//        Secretary.docHistory("---Gym information---");
         ArrayList<String> strList = new ArrayList<>();
         // Gym information
         strList.add("Gym Name: " + getName());
@@ -118,9 +169,8 @@ public class Gym {
 
         String temp = "";
         for(String str : strList) {
-//            Secretary.docHistory(str);
             temp += str + "\n";
         }
-        return temp.substring(0, temp.length()-1); // Cuts the last "\n"
+        return temp.substring(0, temp.length()-1); // Cuts the last empty line and returns the entire string
     }
 }

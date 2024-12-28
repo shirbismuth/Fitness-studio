@@ -1,31 +1,49 @@
 package gym.management;
 
-import gym.Exception.*;
+import gym.Exception.ClientNotRegisteredException;
+import gym.Exception.DuplicateClientException;
+import gym.Exception.InstructorNotQualifiedException;
+import gym.Exception.InvalidAgeException;
 import gym.customers.*;
 import gym.management.Sessions.*;
 
-//import java.io.File;
-//import java.io.FileWriter;
-//import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.ArrayList;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
+/**
+ * The Secretary class represents a secretary in the gym management system.
+ * It implements the personInterface and Subject interfaces and provides methods to manage clients, instructors and sessions.
+ */
 public class Secretary implements personInterface, Subject {
     private int salary;
     private Person person;
     public static ArrayList<String> actionsHistory = new ArrayList<>();
     private static Set<Observer> observers = new HashSet<>();
     private static Set<Instructor> instructors = new HashSet<>();
-    private static ArrayList<Session> sessions= new ArrayList<>();
+    private static ArrayList<Session> sessions = new ArrayList<>();
 
+    /**
+     * Constructs a new Secretary with the specified person and salary.
+     *
+     * @param per the person representing the secretary
+     * @param salary the salary of the secretary
+     */
     public Secretary(Person per, int salary) {
         person = per;
         this.salary = salary;
     }
 
+    /**
+     * Registers a new client.
+     *
+     * @param per the person to be registered as a client
+     * @return the registered client
+     * @throws InvalidAgeException if the person's age is less than 18
+     * @throws DuplicateClientException if the client is already registered
+     */
     public Client registerClient(Person per) throws InvalidAgeException, DuplicateClientException {
         if (!this.equals(Gym.getInstance().getSecretary())) {
             String e = "Error: Former secretaries are not permitted to perform actions";
@@ -46,6 +64,12 @@ public class Secretary implements personInterface, Subject {
         return c;
     }
 
+    /**
+     * Unregisters a client.
+     *
+     * @param c the client to be unregistered
+     * @throws ClientNotRegisteredException if the client is not registered
+     */
     public void unregisterClient(Client c) throws ClientNotRegisteredException {
         if (!this.equals(Gym.getInstance().getSecretary())) {
             String e = "Error: Former secretaries are not permitted to perform actions";
@@ -60,6 +84,14 @@ public class Secretary implements personInterface, Subject {
         }
     }
 
+    /**
+     * Hires a new instructor.
+     *
+     * @param per the person to be hired as an instructor
+     * @param hourlyWage the hourly wage of the instructor
+     * @param qualifiedLessons the list of sessions the instructor is qualified to teach
+     * @return the hired instructor
+     */
     public Instructor hireInstructor(Person per, int hourlyWage, ArrayList<SessionType> qualifiedLessons) {
         if (!this.equals(Gym.getInstance().getSecretary())) {
             String e = "Error: Former secretaries are not permitted to perform actions";
@@ -74,6 +106,16 @@ public class Secretary implements personInterface, Subject {
         return ins;
     }
 
+    /**
+     * Adds a new session.
+     *
+     * @param sessionType the type of the session
+     * @param time the time of the session
+     * @param forumType the forum type of the session
+     * @param ins the instructor conducting the session
+     * @return the added session
+     * @throws InstructorNotQualifiedException if the instructor is not qualified to teach the session
+     */
     public Session addSession(SessionType sessionType, String time, ForumType forumType, Instructor ins) throws InstructorNotQualifiedException {
         if (!this.equals(Gym.getInstance().getSecretary())) {
             String e = "Error: Former secretaries are not permitted to perform actions";
@@ -102,6 +144,14 @@ public class Secretary implements personInterface, Subject {
         return s;
     }
 
+    /**
+     * Registers a client to a lesson.
+     *
+     * @param c the client to be registered
+     * @param s the session to register the client to
+     * @throws ClientNotRegisteredException if the client is not registered
+     * @throws DuplicateClientException if the client is already registered for the session
+     */
     public void registerClientToLesson(Client c, Session s) throws ClientNotRegisteredException, DuplicateClientException {
         if (!this.equals(Gym.getInstance().getSecretary())) {
             String e = "Error: Former secretaries are not permitted to perform actions";
@@ -160,31 +210,41 @@ public class Secretary implements personInterface, Subject {
         }
     }
 
+    /**
+     * Checks if the client's forum type matches the session's forum type.
+     *
+     * @param c the client
+     * @param s the session
+     * @return an error message if the forum type does not match, otherwise an empty string
+     */
     private String isForumTypeMatch(Client c, Session s) {
         switch (s.getForumType()) {
             case All:
                 break;
             case Male:
                 if (!c.getGender().equals(Gender.Male)) {
-                    String e = "Failed registration: Client's gender doesn't match the session's gender requirements";
-                    return e;
+                    return "Failed registration: Client's gender doesn't match the session's gender requirements";
                 }
             case Female:
                 if (!c.getGender().equals(Gender.Female)) {
-                    String e = "Failed registration: Client's gender doesn't match the session's gender requirements";
-                    return e;
+                    return "Failed registration: Client's gender doesn't match the session's gender requirements";
                 }
                 break;
             case Seniors:
                 if (c.getAge() < 65) {
-                    String e = "Failed registration: Client doesn't meet the age requirements for this session (Seniors)";
-                    return e;
+                    return "Failed registration: Client doesn't meet the age requirements for this session (Seniors)";
                 }
                 break;
         }
         return "";
     }
 
+    /**
+     * Checks if the session time has passed.
+     *
+     * @param lessonTime the time of the session
+     * @return true if the session time has passed, otherwise false
+     */
     private boolean isPassed(String lessonTime) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
         LocalDateTime givenDateTime = LocalDateTime.parse(lessonTime, formatter);
@@ -192,12 +252,21 @@ public class Secretary implements personInterface, Subject {
         return currentDateTime.isAfter(givenDateTime);
     }
 
+    /**
+     * Prints the actions history.
+     */
     public static void printActions() {
         for (String action : actionsHistory) {
             System.out.println(action);
         }
     }
 
+    /**
+     * Converts the time to a specific format.
+     *
+     * @param time the time to be converted
+     * @return the formatted time
+     */
     public String timeToFormat(String time) {
         DateTimeFormatter originalFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
         DateTimeFormatter resultFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
@@ -205,16 +274,31 @@ public class Secretary implements personInterface, Subject {
         return dateTime.format(resultFormat);
     }
 
+    /**
+     * Registers an observer.
+     *
+     * @param o the observer to be registered
+     */
     @Override
     public void registerObserver(Observer o) {
         observers.add(o);
     }
 
+    /**
+     * Unregisters an observer.
+     *
+     * @param o the observer to be unregistered
+     */
     @Override
     public void unregisterObserver(Observer o) {
         observers.remove(o);
     }
 
+    /**
+     * Notifies all registered observers with a message.
+     *
+     * @param message the message to be sent to the observers
+     */
     @Override
     public void notify(String message) {
         for (Observer current : observers) {
@@ -223,6 +307,12 @@ public class Secretary implements personInterface, Subject {
         actionsHistory.add("A message was sent to all gym clients: " + message);
     }
 
+    /**
+     * Notifies all registered observers with a session and a message.
+     *
+     * @param s the session to be sent to the observers
+     * @param message the message to be sent to the observers
+     */
     @Override
     public void notify(Session s, String message) {
         Set<Client> toNotify = s.getRegistered();
@@ -232,6 +322,12 @@ public class Secretary implements personInterface, Subject {
         actionsHistory.add("A message was sent to everyone registered for session " + s.getSessionType() + " on " + timeToFormat(s.getTime()) + " : " + message);
     }
 
+    /**
+     * Notifies all registered observers with a date and a message.
+     *
+     * @param date the date to be sent to the observers
+     * @param message the message to be sent to the observers
+     */
     @Override
     public void notify(String date, String message) {
         for (Session session : sessions) {
@@ -246,6 +342,9 @@ public class Secretary implements personInterface, Subject {
         actionsHistory.add("A message was sent to everyone registered for a session on " + dateByFormat + " : " + message);
     }
 
+    /**
+     * Pays salaries to all employees.
+     */
     public void paySalaries() {
         this.deposit(salary); // Pay to secretary
         Gym.getInstance().withdraw(salary);
@@ -259,10 +358,20 @@ public class Secretary implements personInterface, Subject {
         actionsHistory.add("Salaries have been paid to all employees");
     }
 
+    /**
+     * Returns the salary of the secretary.
+     *
+     * @return the salary of the secretary
+     */
     public int getSalary() {
         return this.salary;
     }
 
+    /**
+     * Returns the set of clients.
+     *
+     * @return the set of clients
+     */
     public Set<Client> getClients() {
         Set<Client> result = new HashSet<>();
         for (Observer current : observers) {
@@ -271,51 +380,99 @@ public class Secretary implements personInterface, Subject {
         return result;
     }
 
+    /**
+     * Returns the set of instructors.
+     *
+     * @return the set of instructors
+     */
     public Set<Instructor> getInstructors() {
         return new HashSet<>(instructors);
     }
 
+    /**
+     * Returns the list of sessions.
+     *
+     * @return the list of sessions
+     */
     public ArrayList<Session> getSessions() {
         return new ArrayList<>(sessions);
     }
 
+    /**
+     * Returns the name of the secretary.
+     *
+     * @return the name of the secretary
+     */
     @Override
     public String getName() {
         return person.getName();
     }
 
+    /**
+     * Returns the balance of the secretary.
+     *
+     * @return the balance of the secretary
+     */
     @Override
     public int getBalance() {
         return person.getBalance();
     }
 
+    /**
+     * Returns the gender of the secretary.
+     *
+     * @return the gender of the secretary
+     */
     @Override
     public Gender getGender() {
         return person.getGender();
     }
 
+    /**
+     * Returns the birthday of the secretary.
+     *
+     * @return the birthday of the secretary
+     */
     @Override
-    public String getBirthday(){
+    public String getBirthday() {
         return person.getBirthday();
     }
 
+    /**
+     * Returns the ID of the secretary.
+     *
+     * @return the ID of the secretary
+     */
     @Override
-    public int getID()
-    {
+    public int getID() {
         return person.getID();
     }
 
+    /**
+     * Returns the age of the secretary.
+     *
+     * @return the age of the secretary
+     */
     @Override
-    public int getAge()
-    {
+    public int getAge() {
         return person.getAge();
     }
 
+    /**
+     * Deposits a specified sum into the secretary's balance.
+     *
+     * @param sum the sum to be deposited
+     */
     @Override
     public void deposit(int sum){
         person.deposit(sum);
     }
 
+    /**
+     * Withdraws a specified sum from the secretary's balance.
+     *
+     * @param sum the sum to be withdrawn
+     */
     @Override
     public void withdraw(int sum){
         person.withdraw(sum);
