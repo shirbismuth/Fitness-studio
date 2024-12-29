@@ -6,6 +6,7 @@ import gym.Exception.InstructorNotQualifiedException;
 import gym.Exception.InvalidAgeException;
 import gym.customers.*;
 import gym.helpers.*;
+import gym.management.Subject;
 
 import java.util.ArrayList;
 import java.util.HashSet;

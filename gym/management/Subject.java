@@ -1,6 +1,7 @@
-package gym.management.Sessions;
+package gym.management;
 
 import gym.customers.Observer;
+import gym.management.Sessions.Session;
 
 /**
  * The Subject interface represents a subject in the observer pattern.

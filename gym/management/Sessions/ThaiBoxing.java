@@ -10,7 +10,7 @@ import java.util.Set;
  * It implements the Session interface and provides details about the session such as time,
  * forum type, instructor, price, capacity, and registered clients.
  */
-public class ThaiBoxing implements Session {
+public class ThaiBoxing extends Session {
     private static final int PRICE = 100;
     private static final int CAPACITY = 20;
 
@@ -109,7 +109,7 @@ public class ThaiBoxing implements Session {
      * @param c the client to be registered
      */
     @Override
-    public void registerToLesson(Client c) {
+    void registerToLesson(Client c) {
         registered.add(c);
     }
 }

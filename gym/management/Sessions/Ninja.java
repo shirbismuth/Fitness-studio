@@ -10,7 +10,7 @@ import java.util.Set;
  * It implements the Session interface and contains details about the session such as time, forum type,
  * instructor, and registered clients.
  */
-public class Ninja implements Session {
+public class Ninja extends Session {
     private static final int PRICE = 150;
     private static final int CAPACITY = 5;
 
@@ -109,7 +109,7 @@ public class Ninja implements Session {
      * @param c the client to be registered
      */
     @Override
-    public void registerToLesson(Client c) {
+    void registerToLesson(Client c) {
         registered.add(c);
     }
 }

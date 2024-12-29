@@ -2,67 +2,45 @@ package gym.management.Sessions;
 
 import gym.customers.Client;
 
+import java.util.HashSet;
 import java.util.Set;
 
-/**
- * The Session interface represents a session in the gym management system.
- * It provides methods to get details about the session such as type, time, forum type,
- * instructor, price, capacity, and registered clients. It also allows registering a client to the session.
- */
-public interface Session {
-    /**
-     * Returns the session type.
-     *
-     * @return the session type
-     */
-    SessionType getSessionType();
+public abstract class Session {
+    protected String time;
+    protected ForumType forumType;
+    protected Instructor instructor;
+    protected Set<Client> registered;
 
-    /**
-     * Returns the time of the session.
-     *
-     * @return the time of the session
-     */
-    String getTime();
+    protected Session(String time, ForumType forumType, Instructor instructor) {
+        this.time = time;
+        this.forumType = forumType;
+        this.instructor = instructor;
+        this.registered = new HashSet<>();
+    }
 
-    /**
-     * Returns the forum type of the session.
-     *
-     * @return the forum type of the session
-     */
-    ForumType getForumType();
+    public String getTime() {
+        return time;
+    }
 
-    /**
-     * Returns the instructor conducting the session.
-     *
-     * @return the instructor conducting the session
-     */
-    Instructor getInstructor();
+    public ForumType getForumType() {
+        return forumType;
+    }
 
-    /**
-     * Returns the price of the session.
-     *
-     * @return the price of the session
-     */
-    int getPrice();
+    public Instructor getInstructor() {
+        return instructor;
+    }
 
-    /**
-     * Returns the capacity of the session.
-     *
-     * @return the capacity of the session
-     */
-    int getCapacity();
+    public Set<Client> getRegistered() {
+        return new HashSet<>(registered);
+    }
 
-    /**
-     * Returns the set of clients registered for the session.
-     *
-     * @return the set of clients registered for the session
-     */
-    Set<Client> getRegistered();
 
-    /**
-     * Registers a client to the session.
-     *
-     * @param c the client to be registered
-     */
-    void registerToLesson(Client c);
+
+    abstract SessionType getSessionType();
+
+    abstract int getPrice();
+
+    abstract int getCapacity();
+
+    abstract void registerToLesson(Client c);
 }
