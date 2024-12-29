@@ -14,4 +14,22 @@ public class Ninja extends Session {
     private static final int PRICE = 150;
     private static final int CAPACITY = 5;
 
+    public Ninja(String time, ForumType forumType, Instructor instructor) {
+        super(time, forumType, instructor);
     }
+
+    @Override
+    public SessionType getSessionType() {
+        return SessionType.Ninja;
+    }
+
+    @Override
+    public int getPrice() {
+        return PRICE;
+    }
+
+    @Override
+    public int getCapacity() {
+        return CAPACITY;
+    }
+}
