@@ -79,7 +79,7 @@ public class Gym {
     public void setSecretary(Person p1, int salary) {
         secretary = new Secretary(p1, salary);
         String action = "A new secretary has started working at the gym: " + secretary.getName();
-        Secretary.actionsHistory.add(action);
+        secretary.addToActionsHistory(action);
     }
 
     /**

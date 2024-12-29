@@ -4,8 +4,8 @@ public class Pilates extends Session {
     private static final int PRICE = 60;
     private static final int CAPACITY = 30;
 
-    public Pilates(String time,ForumType forumType, Instructor instructor){
-        super(time , forumType , instructor);
+    Pilates(String time,ForumType forumType, Instructor instructor){
+        super(time, forumType, instructor);
     }
 
     @Override

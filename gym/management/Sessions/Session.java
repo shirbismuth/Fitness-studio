@@ -38,9 +38,9 @@ public abstract class Session {
         registered.add(c);
     }
 
-    abstract SessionType getSessionType();
+    public abstract SessionType getSessionType();
 
-    abstract int getPrice();
+    public abstract int getPrice();
 
-    abstract int getCapacity();
+    public abstract int getCapacity();
 }

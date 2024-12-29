@@ -1,10 +1,5 @@
 package gym.management.Sessions;
 
-import gym.customers.Client;
-
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  * The Ninja class represents a Ninja session in the gym management system.
  * It implements the Session interface and contains details about the session such as time, forum type,
@@ -14,7 +9,7 @@ public class Ninja extends Session {
     private static final int PRICE = 150;
     private static final int CAPACITY = 5;
 
-    public Ninja(String time, ForumType forumType, Instructor instructor) {
+    Ninja(String time, ForumType forumType, Instructor instructor) {
         super(time, forumType, instructor);
     }
 

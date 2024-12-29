@@ -15,7 +15,7 @@ public class SessionFactory {
      * @return a new session instance of the specified type
      * @throws IllegalArgumentException if the session type is invalid
      */
-    public static Session createSession(SessionType sessionType, String time, ForumType forumType, Instructor instructor) {
+    static Session createSession(SessionType sessionType, String time, ForumType forumType, Instructor instructor) {
         switch (sessionType) {
             case ThaiBoxing:
                 return new ThaiBoxing(time, forumType, instructor);

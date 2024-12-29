@@ -19,7 +19,7 @@ import java.util.Set;
 public class Secretary implements personInterface, Subject {
     private int salary;
     private Person person;
-    public static ArrayList<String> actionsHistory = new ArrayList<>();
+    private static ArrayList<String> actionsHistory = new ArrayList<>();
     private static Set<Observer> observers = new HashSet<>();
     private static Set<Instructor> instructors = new HashSet<>();
     private static ArrayList<Session> sessions = new ArrayList<>();
@@ -219,18 +219,18 @@ public class Secretary implements personInterface, Subject {
      */
     private String isForumTypeMatch(Client c, Session s) {
         switch (s.getForumType()) {
-            case All:
+            case ForumType.All:
                 break;
-            case Male:
+            case ForumType.Male:
                 if (!c.getGender().equals(Gender.Male)) {
                     return "Failed registration: Client's gender doesn't match the session's gender requirements";
                 }
-            case Female:
+            case ForumType.Female:
                 if (!c.getGender().equals(Gender.Female)) {
                     return "Failed registration: Client's gender doesn't match the session's gender requirements";
                 }
                 break;
-            case Seniors:
+            case ForumType.Seniors:
                 if (c.getAge() < 65) {
                     return "Failed registration: Client doesn't meet the age requirements for this session (Seniors)";
                 }
@@ -454,5 +454,9 @@ public class Secretary implements personInterface, Subject {
     @Override
     public void withdraw(int sum){
         person.withdraw(sum);
+    }
+
+    void addToActionsHistory(String action) {
+        actionsHistory.add(action);
     }
 }
