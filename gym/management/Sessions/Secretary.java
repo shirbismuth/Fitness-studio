@@ -320,6 +320,11 @@ public class Secretary implements personInterface, Subject {
      * Pays salaries to all employees.
      */
     public void paySalaries() {
+        if (!this.equals(Gym.getInstance().getSecretary())) {
+            String e = "Error: Former secretaries are not permitted to perform actions";
+            System.out.println(e);
+            return;
+        }
         this.deposit(salary); // Pay to secretary
         Gym.getInstance().withdraw(salary);
         Set<Session> notPaidCopy = new HashSet<>(notPaidSessions);
@@ -333,17 +338,13 @@ public class Secretary implements personInterface, Subject {
         actionsHistory.add("Salaries have been paid to all employees");
     }
 
+    /**
+     * Returns a string representation of the secretary.
+     *
+     * @return a string representation of the secretary
+     */
     public String toString(){
         return person.toString() +  " | Role: Secretary | Salary per Month: " + salary;
-    }
-
-    /**
-     * Returns the salary of the secretary.
-     *
-     * @return the salary of the secretary
-     */
-    public int getSalary() {
-        return this.salary;
     }
 
     /**
@@ -370,6 +371,7 @@ public class Secretary implements personInterface, Subject {
 
     /**
      * Returns the list of sessions.
+     *
      * @return the list of sessions
      */
     public ArrayList<Session> getSessions() {
@@ -456,6 +458,11 @@ public class Secretary implements personInterface, Subject {
         person.withdraw(sum);
     }
 
+    /**
+     * Adds an action to the actions history.
+     *
+     * @param action the action to be added
+     */
     void addToActionsHistory(String action) {
         actionsHistory.add(action);
     }

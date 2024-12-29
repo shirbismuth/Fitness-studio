@@ -77,7 +77,8 @@ public class Client implements personInterface, Observer {
      * @return the age of the client
      */
     @Override
-    public int getAge() {return person.getAge();
+    public int getAge() {
+        return person.getAge();
     }
 
     /**
@@ -119,6 +120,11 @@ public class Client implements personInterface, Observer {
         messages.add(message);
     }
 
+    /**
+     * Returns a string representation of the client.
+     *
+     * @return a string representation of the client
+     */
     @Override
     public String toString() {
        return person.toString();

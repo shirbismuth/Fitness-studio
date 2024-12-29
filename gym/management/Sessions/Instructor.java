@@ -5,8 +5,6 @@ import gym.customers.Person;
 import gym.customers.personInterface;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * The Instructor class represents an instructor in the gym management system.
@@ -131,6 +129,11 @@ public class Instructor implements personInterface {
         person.withdraw(sum);
     }
 
+    /**
+     * Returns a string representation of the instructor.
+     *
+     * @return a string representation of the instructor
+     */
     @Override
     public String toString() {
         String certifiedClasses = "";
