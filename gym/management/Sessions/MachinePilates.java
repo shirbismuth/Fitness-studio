@@ -25,7 +25,7 @@ public class MachinePilates extends Session {
 
     @Override
     public SessionType getSessionType() {
-        return SessionType.Pilates ;
+        return SessionType.MachinePilates ;
     }
 
     @Override

@@ -25,7 +25,7 @@ public class ThaiBoxing extends Session {
 
     @Override
     public SessionType getSessionType() {
-        return SessionType.Pilates ;
+        return SessionType.ThaiBoxing ;
     }
 
     @Override
