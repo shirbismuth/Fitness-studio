@@ -6,10 +6,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 public abstract class Session {
-    protected String time;
-    protected ForumType forumType;
-    protected Instructor instructor;
-    protected Set<Client> registered;
+    private String time;
+    private ForumType forumType;
+    private Instructor instructor;
+    private Set<Client> registered;
 
     protected Session(String time, ForumType forumType, Instructor instructor) {
         this.time = time;
@@ -34,13 +34,13 @@ public abstract class Session {
         return new HashSet<>(registered);
     }
 
-
+    void registerToLesson(Client c) {
+        registered.add(c);
+    }
 
     abstract SessionType getSessionType();
 
     abstract int getPrice();
 
     abstract int getCapacity();
-
-    abstract void registerToLesson(Client c);
 }

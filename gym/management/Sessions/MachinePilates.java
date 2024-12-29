@@ -33,6 +33,25 @@ public class MachinePilates extends Session {
         this.registered = new HashSet<>();
     }
 
+    public MachinePilates(String time,ForumType forumType, Instructor instructor){
+        super(time , forumType , instructor);
+    }
+
+    @Override
+    public SessionType getSessionType() {
+        return SessionType.Pilates ;
+    }
+
+    @Override
+    public int getPrice() {
+        return PRICE;
+    }
+
+    @Override
+    public int getCapacity() {
+        return CAPACITY;
+    }
+
     /**
      * Returns the session type.
      *
